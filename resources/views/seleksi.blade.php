@@ -170,12 +170,12 @@
             serverSide: true,
             responsive: true,
             order: [[ 1, 'asc' ]],
-            ajax: "{{ route('kelas.index') }}",
+            ajax: "{{ route('seleksi.index') }}",
             columns: [
                 {data: 'checkbox', name: 'checkbox', searchable: false, orderable: false, className: 'dt-center'},
-                {data: 'nama_kelas', name: 'nama_kelas'},
+                {data: 'nama_kelas', name: 'nama_kelas', width: "10%"},
                 {data: 'mapel_peminatan', name: 'mapel_peminatan'},
-                {data: 'kapasitas', name: 'kapasitas'},
+                {data: 'kapasitas', name: 'kapasitas', width: "15%"},
                 {data: 'aksi', name: 'aksi', searchable: false,},
             ],
             initComplete: function () {
@@ -265,12 +265,13 @@
         // initialize btn edit
         $('body').on('click', '.editKelas', function () {
             var id_kelas = $(this).data('id');
-            $.get("{{route('kelas.index')}}" + '/' + id_kelas + '/edit', function (data) {
+            $.get("{{route('seleksi.index')}}" + '/' + id_kelas + '/edit', function (data) {
                 $('#modal-kelas').modal('show');
                 $('#id_kelas').val(data.id);
                 $('#nama_kelas').val(data.nama_kelas);
                 $('#kapasitas').val(data.kapasitas);
-                $('#mapel_peminatan').val(JSON.parse("[" + data.mapel_peminatan + "]")).change();
+                var mpl = data.mapel_peminatan;
+                $('#mapel_peminatan').val(mpl.split(',')).change();
             })
         });
         // initialize btn save
@@ -279,7 +280,7 @@
 
             $.ajax({
                 data: $('#formKelas').serialize(),
-                url: "{{ route('kelas.store') }}",
+                url: "{{ route('seleksi.store') }}",
                 type: "POST",
                 dataType: 'json',
                 success: function (data) {
@@ -313,7 +314,7 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         type: "DELETE",
-                        url: "{{ route('kelas.store') }}" + '/' + id_kelas,
+                        url: "{{ route('seleksi.store') }}" + '/' + id_kelas,
                         success: function (data) {
                             swal_success();
                             table.draw();
@@ -348,7 +349,7 @@
             if (result.isConfirmed) {
                 var join_selected_values = allVals.join(",");
                 $.ajax({
-                    url: "{{ route('kelas.deleteAll') }}",
+                    url: "{{ route('seleksi.deleteAll') }}",
                     type: 'DELETE',
                     data: 'ids='+join_selected_values,
                     success: function (data) {

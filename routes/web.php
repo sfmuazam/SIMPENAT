@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\SeleksiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,3 +35,8 @@ Route::resource('siswa', SiswaController::class);
 Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa.index');
 Route::delete('/siswa', [SiswaController::class, 'deleteAll'])->name('siswa.deleteAll');
 Route::post('/siswa/import', [SiswaController::class, 'import'])->name('siswa.import');
+
+Route::resource('seleksi', SeleksiController::class);
+Route::get('/seleksi', [SeleksiController::class, 'index'])->name('seleksi.index');
+Route::delete('/seleksi', [SeleksiController::class, 'deleteAll'])->name('seleksi.deleteAll');
+Route::post('/seleksi/import', [SeleksiController::class, 'import'])->name('seleksi.import');

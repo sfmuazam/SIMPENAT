@@ -19,7 +19,7 @@ return new class extends Migration
             $table->bigInteger('nisn')->unique();
             $table->string('nama');
             $table->string('asal_kelas');
-            $table->boolean('isJoin')->default(0);
+            $table->string('kelas_tujuan')->nullable();
             $table->timestamps();
         });
     }

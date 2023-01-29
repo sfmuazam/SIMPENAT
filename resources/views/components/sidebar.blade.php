@@ -87,9 +87,16 @@
                 </li>
 
                 <li class="sidebar-item {{ ($title === "Siswa") ? 'active' : '' }}">
-                    <a href="/siswa" class='sidebar-link'>
+                    <a href="{{ route('siswa.index') }}" class='sidebar-link'>
                         <i class="bi bi-people-fill"></i>
                         <span>Siswa</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item {{ ($title === "Seleksi") ? 'active' : '' }}">
+                    <a href="{{ route('seleksi.index') }}" class='sidebar-link'>
+                        <i class="bi bi-people-fill"></i>
+                        <span>Seleksi</span>
                     </a>
                 </li>
 

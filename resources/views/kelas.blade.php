@@ -271,7 +271,6 @@
                 $('#nama_kelas').val(data.nama_kelas);
                 $('#kapasitas').val(data.kapasitas);
                 var mpl = data.mapel_peminatan;
-                console.log(mpl.split(','));
                 $('#mapel_peminatan').val(mpl.split(',')).change();
             })
         });
