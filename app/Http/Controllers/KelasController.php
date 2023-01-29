@@ -17,6 +17,7 @@ class KelasController extends Controller
 
             return DataTables::of($kelas)->editColumn('mapel_peminatan',function ($data) {
                 $list_mapel = explode(",", $data->mapel_peminatan);
+                sort($list_mapel);
                 $mapel = '';
                 foreach($list_mapel as $row){
                     $mapel .= ' <span class="badge bg-light-primary">'.$row.'</span>';

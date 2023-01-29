@@ -270,7 +270,9 @@
                 $('#id_kelas').val(data.id);
                 $('#nama_kelas').val(data.nama_kelas);
                 $('#kapasitas').val(data.kapasitas);
-                $('#mapel_peminatan').val(JSON.parse("[" + data.mapel_peminatan + "]")).change();
+                var mpl = data.mapel_peminatan;
+                console.log(mpl.split(','));
+                $('#mapel_peminatan').val(mpl.split(',')).change();
             })
         });
         // initialize btn save
