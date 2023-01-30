@@ -35,6 +35,7 @@ Route::resource('siswa', SiswaController::class);
 Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa.index');
 Route::delete('/siswa', [SiswaController::class, 'deleteAll'])->name('siswa.deleteAll');
 Route::post('/siswa/import', [SiswaController::class, 'import'])->name('siswa.import');
+Route::post('/siswa/import-nilai', [SiswaController::class, 'import_nilai'])->name('siswa.import-nilai');
 
 Route::resource('seleksi', SeleksiController::class);
 Route::get('/seleksi', [SeleksiController::class, 'index'])->name('seleksi.index');

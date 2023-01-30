@@ -11,10 +11,10 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 class SiswaImport implements WithHeadingRow, ToCollection
 {
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
     // public function model(array $row)
     // {
     //     return new Siswa([
@@ -26,17 +26,17 @@ class SiswaImport implements WithHeadingRow, ToCollection
 
     public function collection(Collection $rows)
     {
-        foreach($rows as $row){
+        foreach ($rows as $row) {
             Siswa::updateOrCreate(
                 [
                     'nis' => $row['nis'],
                 ],
                 [
                     'nisn' => $row['nisn'],
-                    'nama' => $row['nama'],
-                    'asal_kelas' => $row['asal_kelas'],
+                    'nama' => ucwords(strtolower($row['nama'])),
+                    'asal_kelas' => $row['kelas'],
                 ]
-                );
+            );
         }
     }
 }
