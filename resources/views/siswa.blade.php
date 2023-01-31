@@ -456,7 +456,7 @@
                                     <div class="col-12">
                                       <div class="form-group">
                                         <label for="agama" class="form-label">Agama</label>
-                                        <input required name="n_agama" id="n_agama" placeholder="Masukkan Nilai ...."  type="number" step="0.01" min="0" max="100" class="form-control">
+                                        <input required name="n_agama" id="n_agama" placeholder="Masukkan Nilai ...."  type="number" value="0" step="0.01" min="0" max="100" class="form-control">
                                       </div>
                                     </div>
                                     <div class="col-12">

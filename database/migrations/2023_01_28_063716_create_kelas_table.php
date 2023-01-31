@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama_kelas')->unique();
             $table->string('mapel_peminatan')->nullable();
+            $table->string('mapel_penilaian')->nullable();
             $table->integer('kapasitas');
             $table->timestamps();
         });

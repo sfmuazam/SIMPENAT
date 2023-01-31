@@ -9,7 +9,7 @@ use App\Imports\SiswaImport;
 use App\Imports\NilaiImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Siswa;
-
+use App\Models\User;
 class SiswaController extends Controller
 {
     public function index(Request $request)
@@ -96,6 +96,15 @@ class SiswaController extends Controller
 
     public function store(Request $request)
     {
+        $tes = Siswa::where('nis', $request->nis)->count();
+        if ($tes == 0) {
+            $input = [
+                'id' => $request->nis,
+                'name' => $request->nama,
+                'password' => bcrypt($request->nis)
+            ];
+            User::create($input);
+        }
         Siswa::updateOrCreate(
             ['id' => $request->id_siswa],
             [
@@ -105,22 +114,22 @@ class SiswaController extends Controller
                 'asal_kelas' => $request->asal_kelas,
                 'agama' => $request->n_agama,
                 'pkn' => $request->n_pkn,
-                'indo' => $request->n_indo,
-                'inggris' => $request->n_inggris,
-                'mtk' => $request->n_mtk,
+                'bahasa_indonesia' => $request->n_indo,
+                'bahasa_inggris' => $request->n_inggris,
+                'matematika' => $request->n_mtk,
                 'fisika' => $request->n_fisika,
                 'kimia' => $request->n_kimia,
                 'biologi' => $request->n_biologi,
-                'eko' => $request->n_eko,
-                'geo' => $request->n_geo,
-                'sosio' => $request->n_sosio,
-                'penjas' => $request->n_penjas,
-                'seni' => $request->n_seni,
-                'sejarah' => $request->n_sejarah,
-                'if' => $request->n_if,
-                'jawa' => $request->n_jawa,
+                'ekonomi' => $request->n_eko,
+                'geografi' => $request->n_geo,
+                'sosiologi' => $request->n_sosio,
+                'penjaskes' => $request->n_penjas,
+                'seni_budaya' => $request->n_seni,
+                'sejarah_indonesia' => $request->n_sejarah,
+                'informatika' => $request->n_if,
+                'bahasa_jawa' => $request->n_jawa,
                 'prakarya' => $request->n_prakarya,
-                'bk' => $request->n_bk,
+                'bimbingan_konseling' => $request->n_bk,
             ]
         );
 
@@ -145,6 +154,9 @@ class SiswaController extends Controller
 
     public function destroy($id)
     {
+        $nis = Siswa::where('id', $id)->first()->nis;
+
+        User::destroy($nis);
         Siswa::find($id)->delete();
 
         return response()->json(['success' => 'Data Berhasil Dihapus']);
@@ -153,6 +165,7 @@ class SiswaController extends Controller
     public function deleteAll(Request $request)
     {
         $ids = $request->ids;
+        Siswa::whereIn('id', explode(",", $ids))->delete();
         Siswa::whereIn('id', explode(",", $ids))->delete();
         return response()->json(['success' => "Products Deleted successfully."]);
     }

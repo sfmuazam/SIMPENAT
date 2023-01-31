@@ -41,6 +41,7 @@
                 </th>
                 <th>Kelas</th>
                 <th>Mapel Peminatan</th>
+                <th>Mapel Penilaian</th>
                 <th>Kapasitas</th>
                 <th>Aksi</th>
               </tr>
@@ -89,6 +90,31 @@
                                             @foreach($daftar_mapel as $row)
                                           <option value="{{ $row->nama_mapel }}">{{ $row->nama_mapel }}</option>
                                           @endforeach
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <div class="col-12">
+                                      <div class="form-group">
+                                        <label for="mapel_penilaian" class="form-label">Mapel Penilaian</label>
+                                        <select class="form-select" name="mapel_penilaian[]" id="mapel_penilaian" data-placeholder="Pilih Mapel Penilaian" multiple>
+                                           <option value="agama">Agama</option>
+                                           <option value="bahasa_indonesia">Bahasa Indonesia</option>
+                                           <option value="bahasa_inggris">Bahasa Inggris</option>
+                                           <option value="bahasa_jawa">Bahasa Jawa</option>
+                                           <option value="bimbingan_konseling">Bimbingan Konseling</option>
+                                           <option value="biologi">Biologi</option>
+                                           <option value="ekonomi">Ekonomi</option>
+                                           <option value="fisika">Fisika</option>
+                                           <option value="geografi">Geografi</option>
+                                           <option value="informatika">Informatika</option>
+                                           <option value="kimia">Kimia</option>
+                                           <option value="matematika">Matematika</option>
+                                           <option value="penjaskes">Penjaskes</option>
+                                           <option value="prakarya">Prakarya</option>
+                                           <option value="pkn">PKN</option>
+                                           <option value="sejarah_indonesia">Sejarah Indonesia</option>
+                                           <option value="seni_budaya">Seni Budaya</option>
+                                           <option value="sosiologi">Sosiologi</option>
                                         </select>
                                       </div>
                                     </div>
@@ -173,10 +199,11 @@
             ajax: "{{ route('kelas.index') }}",
             columns: [
                 {data: 'checkbox', name: 'checkbox', searchable: false, orderable: false, className: 'dt-center'},
-                {data: 'nama_kelas', name: 'nama_kelas', width: "10%"},
+                {data: 'nama_kelas', name: 'nama_kelas', width: "7%"},
                 {data: 'mapel_peminatan', name: 'mapel_peminatan'},
-                {data: 'kapasitas', name: 'kapasitas', width: "15%"},
-                {data: 'aksi', name: 'aksi', searchable: false,},
+                {data: 'mapel_penilaian', name: 'mapel_penilaian'},
+                {data: 'kapasitas', name: 'kapasitas', width: "10%"},
+                {data: 'aksi', name: 'aksi', width: "10%", searchable: false,},
             ],
             initComplete: function () {
             var api = this.api();
@@ -261,6 +288,7 @@
             $('#formKelas').trigger("reset");
             $('#modal-kelas').modal('show');
             $('#mapel_peminatan').val([]).change();
+            $('#mapel_penilaian').val([]).change();
         });
         // initialize btn edit
         $('body').on('click', '.editKelas', function () {
@@ -272,6 +300,9 @@
                 $('#kapasitas').val(data.kapasitas);
                 var mpl = data.mapel_peminatan;
                 $('#mapel_peminatan').val(mpl.split(',')).change();
+                var mpl2 = data.mapel_penilaian;
+                console.log(mpl2);
+                $('#mapel_penilaian').val(mpl2.split(',')).change();
             })
         });
         // initialize btn save

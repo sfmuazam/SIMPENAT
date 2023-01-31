@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Siswa;
+use App\Models\User;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Illuminate\Support\Collection;
@@ -27,6 +28,13 @@ class SiswaImport implements WithHeadingRow, ToCollection
     public function collection(Collection $rows)
     {
         foreach ($rows as $row) {
+            $input = [
+                'id' => $row['nis'],
+                'name' => ucwords(strtolower($row['nama'])),
+                'password' => bcrypt($row['nis'])
+            ];
+            User::create($input);
+
             Siswa::updateOrCreate(
                 [
                     'nis' => $row['nis'],

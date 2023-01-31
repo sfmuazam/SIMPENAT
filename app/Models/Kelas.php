@@ -11,5 +11,5 @@ class Kelas extends Model
 
     protected $table = 'kelas';
 
-    protected $fillable = ['nama_kelas','mapel_peminatan','kapasitas'];
+    protected $fillable = ['nama_kelas','mapel_peminatan','mapel_penilaian','kapasitas'];
 }

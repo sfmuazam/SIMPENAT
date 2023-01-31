@@ -13,14 +13,22 @@ class KelasController extends Controller
     public function index(Request $request)
     {
         if (request()->ajax()) {
-                $kelas = Kelas::select(['id','nama_kelas','kapasitas','mapel_peminatan']);
+                $kelas = Kelas::select(['*']);
 
             return DataTables::of($kelas)->editColumn('mapel_peminatan',function ($data) {
                 $list_mapel = explode(",", $data->mapel_peminatan);
                 sort($list_mapel);
                 $mapel = '';
                 foreach($list_mapel as $row){
-                    $mapel .= ' <span class="badge bg-light-primary">'.$row.'</span>';
+                    $mapel .= ' <span class="badge bg-light-success">'.$row.'</span>';
+                }
+                return $mapel;
+            })->editColumn('mapel_penilaian',function ($data) {
+                $list_mapel = explode(",", $data->mapel_penilaian);
+                sort($list_mapel);
+                $mapel = '';
+                foreach($list_mapel as $row){
+                    $mapel .= ' <span class="badge bg-light-danger">'.ucwords(str_replace('_',' ', $row)).'</span>';
                 }
                 return $mapel;
             })
@@ -31,11 +39,11 @@ class KelasController extends Controller
                 $button .= ' <div data-toggle="tooltip" data-id="'.$data->id.'" data-original-title="Delete" class="btn btn-sm btn-icon btn-danger btn-circle mr-2 deleteKelas"><i
               class="bi bi-trash-fill"></i></div>';
                 return $button;
-            })->rawColumns(['checkbox','mapel_peminatan','aksi'])->make(true);
+            })->rawColumns(['checkbox','mapel_peminatan','mapel_penilaian','aksi'])->make(true);
         }
         return view('kelas', [
             'title' => 'Kelas',
-            'daftar_mapel' => Mapel::all(),
+            'daftar_mapel' => Mapel::orderBy('nama_mapel')->get(),
         ]);
     }
 
@@ -76,12 +84,14 @@ class KelasController extends Controller
 
     public function store(Request $request)
     {
-        $list_mapel = implode(",",$request->mapel_peminatan);
+        $list_mapel_peminatan = implode(",",$request->mapel_peminatan);
+        $list_mapel_penilaian = implode(",",$request->mapel_penilaian);
         Kelas::updateOrCreate(
             ['id' => $request->id_kelas],
             [
                 'nama_kelas' => $request->nama_kelas,
-                'mapel_peminatan' => $list_mapel,
+                'mapel_peminatan' => $list_mapel_peminatan,
+                'mapel_penilaian' => $list_mapel_penilaian,
                 'kapasitas' => $request->kapasitas,
             ]
         );

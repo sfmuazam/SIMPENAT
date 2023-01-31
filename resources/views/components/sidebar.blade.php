@@ -100,7 +100,7 @@
                     </a>
                 </li>
 
-                <li class="sidebar-item {{ ($title === "Tabungan") ? 'active' : '' }}">
+                {{-- <li class="sidebar-item {{ ($title === "Tabungan") ? 'active' : '' }}">
                     <a href="/tabungan" class='sidebar-link'>
                         <i class="bi bi-cash-coin"></i>
                         <span>Tabungan</span>
@@ -126,13 +126,16 @@
                             <a href="/totalpersiswa">Total Per Siswa</a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
 
                 <li class="sidebar-item {{ ($title === "Logout") ? 'active' : '' }}">
-                    <a href="/logout" class='sidebar-link'>
-                        <i class="bi bi-box-arrow-left"></i>
-                        <span>Logout</span>
-                    </a>
+                    <form action="/logout" method="post">
+                        @csrf
+                        <button class='sidebar-link'>
+                            <i class="bi bi-box-arrow-left"></i>
+                            <span>Logout</span>
+                        </button>
+                    </form>
                 </li>
             </ul>
         </div>
