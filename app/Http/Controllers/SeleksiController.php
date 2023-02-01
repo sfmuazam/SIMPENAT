@@ -56,7 +56,11 @@ class SeleksiController extends Controller
                         return '0';
                 }
             })->addColumn('aksi', function ($data) {
-                $button = '<div data-toggle="tooltip" data-id="' . $data->id . '" data-original-title="Edit" class="btn btn-sm btn-icon btn-success btn-circle mr-2 edit editKelas"><i class="bi bi-pencil-square"></i></div>';
+                $button = '';
+                if(auth()->user()->id != '0')
+                if(Siswa::where('nis',auth()->user()->id)->value('kelas_tujuan') == null)
+                $button .= '<div data-toggle="tooltip" data-id="' . $data->id . '" data-original-title="Edit" class="btn btn-sm btn-icon btn-success btn-circle mr-2 edit editKelas"><i class="bi bi-plus-circle"></i></div>';
+                $button .= ' <a href="/seleksi/'.$data->nama_kelas.'"><div data-toggle="tooltip" data-id="' . $data->id . '" data-original-title="Info" class="btn btn-sm btn-icon btn-primary btn-circle mr-2 infoJurnal"><i class="bi bi-info-circle"></i></div></a>';
                 return $button;
             })->rawColumns(['mapel_peminatan', 'nilai', 'mapel_penilaian', 'aksi'])->make(true);
         }
@@ -66,28 +70,57 @@ class SeleksiController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function show(Request $request, $nama_kelas)
     {
-        $nilai_seleksi = Siswa::where('nis', auth()->user()->id)->first();
-        $mapel_dinilai = explode(",", Kelas::where('nama_kelas',$request->nama_kelas)->value('mapel_penilaian'));
-        $nilai = 0;
-        foreach ($mapel_dinilai as $row) {
-            $nilai += $nilai_seleksi->$row;
+        if (request()->ajax()) {
+            $siswa = Siswa::select(['nis','nisn','nama','siswa.kelas','nilai_akhir','kelas_tujuan'])->where('kelas_tujuan',$nama_kelas);
+
+            return DataTables::of($siswa)
+            ->addColumn('checkbox',function ($data) {
+                return '<input type="checkbox" class="sub_chk" data-id="'.$data->id.'">';
+        })->addColumn('aksi', function ($data) {
+                // $button = '<div data-toggle="tooltip" data-id="'.$data->id.'" data-original-title="Info" class="btn btn-sm btn-icon btn-primary btn-circle mr-2 info infoTabungan"><i class="bi bi-info-circle"></i></div>';
+                $button = ' <div data-toggle="tooltip" data-id="'.$data->id.'" data-original-title="Edit" class="btn btn-sm btn-icon btn-success btn-circle mr-2 edit editKelas"><i class="bi bi-pencil-square"></i></div>';
+                $button .= ' <div data-toggle="tooltip" data-id="'.$data->nis.'" data-original-title="Delete" class="btn btn-sm btn-icon btn-danger btn-circle mr-2 deleteKelas"><i
+              class="bi bi-trash-fill"></i></div>';
+                return $button;
+            })->rawColumns(['checkbox','aksi'])->make();
         }
 
+        return view('rekapSeleksi', [
+            "title" => "Seleksi",
+            'nama_kelas' => $nama_kelas,
+        ]);
+    }
+
+    public function store(Request $request)
+    {
         Siswa::where('nis',auth()->user()->id)->update(
             [
-                'kelas_tujuan' => $request->nama_kelas,
-                'nilai_akhir' => $nilai,
+                'kelas_tujuan' => $request->kelas_tujuan,
+                'nilai_akhir' => $request->nilai_akhir,
             ]
         );
+        $passing_grade = Siswa::where('kelas_tujuan', $request->kelas_tujuan)->orderBy('nilai_akhir', 'desc')->get();
+
+        if($passing_grade->count() > 36){
+        Siswa::where('nis',$passing_grade[$request->kapasitas]->nis)->update(
+            [
+                'kelas_tujuan' => null,
+                'nilai_akhir' => '0',
+            ]
+        );
+    }
 
         return response()->json(['success' => 'Data Berhasil Ditambahkan!']);
     }
 
-    public function show(Kelas $kelas)
-    {
-        //
+    public function keluarkan($id){
+        Siswa::where('nis',$id)->update(
+            [
+                'kelas_tujuan' => null,
+            ]
+        );
     }
 
     public function edit($id)
@@ -98,9 +131,11 @@ class SeleksiController extends Controller
         sort($mapel_dinilai);
         $nilai = array();
         $i = 0;
+        $kelas->jumlah_akhir = 0;
         foreach ($mapel_dinilai as $row) {
             $nama = $kelas->row;
             $nilai[$i] = $nilai_seleksi->$row;
+            $kelas->jumlah_akhir += $nilai_seleksi->$row;
             $i++;
         }
         $kelas->nilai = $nilai;

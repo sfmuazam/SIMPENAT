@@ -19,13 +19,9 @@
                     <div class="form-group">
                     </div>
                     <div class="tambah">
-                        <button type="button" id="importKelas" class="btn btn-primary block" data-bs-toggle="modal"
-                            data-bs-target="#modal-import">
-                            Import Kelas
-                        </button>
                         <button type="button" id="createNewKelas" class="btn btn-primary block" data-bs-toggle="modal"
                             data-bs-target="#modal-kelas">
-                            Tambah Kelas
+                            Tambah Mapel
                         </button>
                     </div>
                 </div>

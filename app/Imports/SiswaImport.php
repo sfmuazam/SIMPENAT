@@ -28,13 +28,15 @@ class SiswaImport implements WithHeadingRow, ToCollection
     public function collection(Collection $rows)
     {
         foreach ($rows as $row) {
-            $input = [
+
+            User::updateOrCreate(
+                ['id' => $row['nis']],
+                [
                 'id' => $row['nis'],
                 'name' => ucwords(strtolower($row['nama'])),
                 'password' => bcrypt($row['nis'])
-            ];
-            User::create($input);
-
+            ]
+        );
             Siswa::updateOrCreate(
                 [
                     'nis' => $row['nis'],
@@ -42,7 +44,7 @@ class SiswaImport implements WithHeadingRow, ToCollection
                 [
                     'nisn' => $row['nisn'],
                     'nama' => ucwords(strtolower($row['nama'])),
-                    'asal_kelas' => $row['kelas'],
+                    'kelas' => $row['kelas'],
                 ]
             );
         }

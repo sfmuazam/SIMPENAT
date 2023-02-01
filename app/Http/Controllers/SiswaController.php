@@ -10,6 +10,7 @@ use App\Imports\NilaiImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Siswa;
 use App\Models\User;
+
 class SiswaController extends Controller
 {
     public function index(Request $request)
@@ -96,14 +97,20 @@ class SiswaController extends Controller
 
     public function store(Request $request)
     {
-        $tes = Siswa::where('nis', $request->nis)->count();
-        if ($tes == 0) {
+        $tes = Siswa::where('id', $request->id_siswa)->get();
+        if ($tes->count() == 0) {
             $input = [
                 'id' => $request->nis,
                 'name' => $request->nama,
                 'password' => bcrypt($request->nis)
             ];
             User::create($input);
+        } else {
+            $t2 = $tes->first();
+            if ($t2->nis != $request->nis) {
+                $update = ['id' => $request->nis];
+                User::where('id', $t2->nis)->update($update);
+            }
         }
         Siswa::updateOrCreate(
             ['id' => $request->id_siswa],
@@ -111,25 +118,44 @@ class SiswaController extends Controller
                 'nis' => $request->nis,
                 'nisn' => $request->nisn,
                 'nama' => $request->nama,
-                'asal_kelas' => $request->asal_kelas,
+                'kelas' => $request->asal_kelas,
                 'agama' => $request->n_agama,
                 'pkn' => $request->n_pkn,
-                'bahasa_indonesia' => $request->n_indo,
-                'bahasa_inggris' => $request->n_inggris,
-                'matematika' => $request->n_mtk,
+                'bahasa_indonesia' => $request->n_bahasa_indonesia,
+                'bahasa_inggris' => $request->n_bahasa_inggris,
+                'matematika' => $request->n_matematika,
                 'fisika' => $request->n_fisika,
                 'kimia' => $request->n_kimia,
                 'biologi' => $request->n_biologi,
-                'ekonomi' => $request->n_eko,
-                'geografi' => $request->n_geo,
-                'sosiologi' => $request->n_sosio,
-                'penjaskes' => $request->n_penjas,
-                'seni_budaya' => $request->n_seni,
-                'sejarah_indonesia' => $request->n_sejarah,
-                'informatika' => $request->n_if,
-                'bahasa_jawa' => $request->n_jawa,
+                'ekonomi' => $request->n_ekonomi,
+                'geografi' => $request->n_geografi,
+                'sosiologi' => $request->n_sosiologi,
+                'penjaskes' => $request->n_penjaskes,
+                'seni_budaya' => $request->n_seni_budaya,
+                'sejarah_indonesia' => $request->n_sejarah_indonesia,
+                'informatika' => $request->n_informatika,
+                'bahasa_jawa' => $request->n_bahasa_jawa,
                 'prakarya' => $request->n_prakarya,
-                'bimbingan_konseling' => $request->n_bk,
+                'bimbingan_konseling' => $request->n_bimbingan_konseling,
+                'agama_uts' => $request->n_agama_uts,
+                'pkn_uts' => $request->n_pkn_uts,
+                'bahasa_indonesia_uts' => $request->n_bahasa_indonesia_uts,
+                'bahasa_inggris_uts' => $request->n_bahasa_inggris_uts,
+                'matematika_uts' => $request->n_matematika_uts,
+                'fisika_uts' => $request->n_fisika_uts,
+                'kimia_uts' => $request->n_kimia_uts,
+                'biologi_uts' => $request->n_biologi_uts,
+                'ekonomi_uts' => $request->n_ekonomi_uts,
+                'geografi_uts' => $request->n_geografi_uts,
+                'sosiologi_uts' => $request->n_sosiologi_uts,
+                'penjaskes_uts' => $request->n_penjaskes_uts,
+                'seni_budaya_uts' => $request->n_seni_budaya_uts,
+                'sejarah_indonesia_uts' => $request->n_sejarah_indonesia_uts,
+                'informatika_uts' => $request->n_informatika_uts,
+                'bahasa_jawa_uts' => $request->n_bahasa_jawa_uts,
+                'prakarya_uts' => $request->n_prakarya_uts,
+                'bimbingan_konseling_uts' => $request->n_bimbingan_konseling_uts,
+                'lainya' => $request->n_lainya,
             ]
         );
 
@@ -164,9 +190,9 @@ class SiswaController extends Controller
 
     public function deleteAll(Request $request)
     {
-        $ids = $request->ids;
-        Siswa::whereIn('id', explode(",", $ids))->delete();
-        Siswa::whereIn('id', explode(",", $ids))->delete();
+        $niss = $request->niss;
+        User::whereIn('id', explode(",", $niss))->delete();
+        Siswa::whereIn('nis', explode(",", $niss))->delete();
         return response()->json(['success' => "Products Deleted successfully."]);
     }
 }

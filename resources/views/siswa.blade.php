@@ -1,6 +1,355 @@
 @extends('components.app')
 
 @section('content')
+<!-- Nilai Siswa -->
+<div class="modal fade" id="modal-nilai" tabindex="-1" role="dialog" aria-labelledby="nilaiTitle"
+aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+  <div class="modal-content">
+    <div class="modal-header bg-primary p-4">
+      <h5 class="modal-title white" id="nilaiTitle">Nilai Siswa
+      </h5>
+      <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+        <i data-feather="x"></i>
+      </button>
+    </div>
+    <div class="modal-body pb-2 px-3">
+      <div class="row mt-2">
+        <div class="col-5">
+            <h6 class="mb-0">Nama</h6>
+        </div>
+        <div class="col-7 text-secondary" id="nama_">
+            Nilai
+        </div>
+      </div>
+      <hr>
+      <div class="row mt-2">
+        <div class="col-5">
+            <h6 class="mb-0">NIS</h6>
+        </div>
+        <div class="col-7 text-secondary" id="nis_">
+            Nilai
+        </div>
+      </div>
+      <hr>
+      <div class="row mt-2">
+        <div class="col-5">
+            <h6 class="mb-0">Kelas</h6>
+        </div>
+        <div class="col-7 text-secondary" id="kelas_">
+            Nilai
+        </div>
+      </div>
+      <hr>
+      <p class="h5 text-center">Daftar Nilai</p>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th class="text-center">Mata Pelajaran</th>
+            <th class="text-center">Raport smt 1</th>
+            <th class="text-center">UTS smt 2</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Agama</td>
+            <td class="text-center" id="agama">Nilai</td>
+            <td class="text-center" id="agama_uts">Nilai</td>
+          </tr>
+          <tr>
+            <td>PKN</td>
+            <td class="text-center" id="pkn">Nilai</td>
+            <td class="text-center" id="pkn_uts">Nilai</td>
+          </tr>
+          <tr>
+            <td>Bahasa Indonesia</td>
+            <td class="text-center" id="bahasa_indonesia">Nilai</td>
+            <td class="text-center" id="bahasa_indonesia_uts">Nilai</td>
+          </tr>
+          <tr>
+            <td>Bahasa Inggris</td>
+            <td class="text-center" id="bahasa_inggris">Nilai</td>
+            <td class="text-center" id="bahasa_inggris_uts">Nilai</td>
+          </tr>
+          <tr>
+            <td>Matematika</td>
+            <td class="text-center" id="matematika">Nilai</td>
+            <td class="text-center" id="matematika_uts">Nilai</td>
+          </tr>
+          <tr>
+            <td>Fisika</td>
+            <td class="text-center" id="fisika">Nilai</td>
+            <td class="text-center" id="fisika_uts">Nilai</td>
+          </tr>
+          <tr>
+            <td>Kimia</td>
+            <td class="text-center" id="kimia">Nilai</td>
+            <td class="text-center" id="kimia_uts">Nilai</td>
+          </tr>
+          <tr>
+            <td>Biologi</td>
+            <td class="text-center" id="biologi">Nilai</td>
+            <td class="text-center" id="biologi_uts">Nilai</td>
+          </tr>
+          <tr>
+            <td>Ekonomi</td>
+            <td class="text-center" id="ekonomi">Nilai</td>
+            <td class="text-center" id="ekonomi_uts">Nilai</td>
+          </tr>
+          <tr>
+            <td>Geografi</td>
+            <td class="text-center" id="geografi">Nilai</td>
+            <td class="text-center" id="geografi_uts">Nilai</td>
+          </tr>
+          <tr>
+            <td>Sosiologi</td>
+            <td class="text-center" id="sosiologi">Nilai</td>
+            <td class="text-center" id="sosiologi_uts">Nilai</td>
+          </tr>
+          <tr>
+            <td>Penjaskes</td>
+            <td class="text-center" id="penjaskes">Nilai</td>
+            <td class="text-center" id="penjaskes_uts">Nilai</td>
+          </tr>
+          <tr>
+            <td>Seni Budaya</td>
+            <td class="text-center" id="seni_budaya">Nilai</td>
+            <td class="text-center" id="seni_budaya_uts">Nilai</td>
+          </tr>
+          <tr>
+            <td>Sejarah Indonesia</td>
+            <td class="text-center" id="sejarah_indonesia">Nilai</td>
+            <td class="text-center" id="sejarah_indonesia_uts">Nilai</td>
+          </tr>
+          <tr>
+            <td>Informatika</td>
+            <td class="text-center" id="informatika">Nilai</td>
+            <td class="text-center" id="informatika_uts">Nilai</td>
+          </tr>
+          <tr>
+            <td>Bahasa Jawa</td>
+            <td class="text-center" id="bahasa_jawa">Nilai</td>
+            <td class="text-center" id="bahasa_jawa_uts">Nilai</td>
+          </tr>
+          <tr>
+            <td>Prakarya</td>
+            <td class="text-center" id="prakarya">Nilai</td>
+            <td class="text-center" id="prakarya_uts">Nilai</td>
+          </tr>
+          <tr>
+            <td>Bimbingan Konseling</td>
+            <td class="text-center" id="bimbingan_konseling">Nilai</td>
+            <td class="text-center" id="bimbingan_konseling_uts">Nilai</td>
+          </tr>
+          <tr>
+            <td><strong>Lainya</strong></td>
+            <td class="text-center" colspan="2" id="lainya">Nilai</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Tambah Data -->
+<div class="modal fade" id="modal-siswa" tabindex="-1" role="dialog" aria-labelledby="tambahDataTitle"
+aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+  <div class="modal-content">
+    <div class="modal-header bg-primary p-4">
+      <h5 class="modal-title white" id="tambahDataTitle">Tambah Siswa
+      </h5>
+      <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+        <i data-feather="x"></i>
+      </button>
+    </div>
+      <div class="modal-body py-0">
+        <form class="form mb-0" id="formSiswa" name="formSiswa">
+        <section id="multiple-column-form">
+          <div class="row match-height">
+            <div class="col-12">
+              <div class="card mb-0">
+                <div class="card-content">
+                  <div class="card-body">
+                    <div class="row">
+                      <input type="hidden" name="id_siswa" id="id_siswa">
+                      <div class="col-12 text-center">
+                        <p class="h4">Identitas Siswa</p>
+                      </div>
+                      <div class="col-12">
+                        <div class="form-group">
+                          <label for="asal_kelas" class="form-label">Kelas</label>
+                          <select class="form-select" id="asal_kelas" name="asal_kelas"
+                            data-placeholder="Pilih Kelas" required>
+                            <option value=""></option>
+                            <option value="X-01">X-01</option>
+                            <option value="X-02">X-02</option>
+                            <option value="X-03">X-03</option>
+                            <option value="X-04">X-04</option>
+                            <option value="X-05">X-05</option>
+                            <option value="X-06">X-06</option>
+                            <option value="X-07">X-07</option>
+                            <option value="X-08">X-08</option>
+                            <option value="X-09">X-09</option>
+                            <option value="X-10">X-10</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="form-group">
+                          <label for="nis" class="form-label">NIS</label>
+                          <input type="text" id="nis" class="form-control" name="nis"
+                            placeholder="Masukkan NIS ...." required>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="form-group">
+                          <label for="nisn" class="form-label">NISN</label>
+                          <input type="text" id="nisn" class="form-control" name="nisn"
+                            placeholder="Masukkan NISN ...." required>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="form-group">
+                          <label for="nama" class="form-label">Nama</label>
+                          <input type="text" id="nama" class="form-control" name="nama"
+                            placeholder="Masukkan Nama Siswa ...." required>
+                        </div>
+                      </div>
+                      <div class="col-12 text-center mt-2">
+                        <p class="h4">Nilai Siswa</p>
+                      </div>
+
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th class="text-center">Mata Pelajaran</th>
+                            <th class="text-center">Raport smt 1</th>
+                            <th class="text-center">UTS smt 2</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Agama</td>
+                            <td class="text-center"><input required name="n_agama" id="n_agama" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_agama_uts" id="n_agama_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>PKN</td>
+                            <td class="text-center"><input required name="n_pkn" id="n_pkn" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_pkn_uts" id="n_pkn_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Bahasa Indonesia</td>
+                            <td class="text-center"><input required name="n_bahasa_indonesia" id="n_bahasa_indonesia" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_bahasa_indonesia_uts" id="n_bahasa_indonesia_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Bahasa Inggris</td>
+                            <td class="text-center"><input required name="n_bahasa_inggris" id="n_bahasa_inggris" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_bahasa_inggris_uts" id="n_bahasa_inggris_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Matematika</td>
+                            <td class="text-center"><input required name="n_matematika" id="n_matematika" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_matematika_uts" id="n_matematika_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Fisika</td>
+                            <td class="text-center"><input required name="n_fisika" id="n_fisika" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_fisika_uts" id="n_fisika_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Kimia</td>
+                            <td class="text-center"><input required name="n_kimia" id="n_kimia" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_kimia_uts" id="n_kimia_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Biologi</td>
+                            <td class="text-center"><input required name="n_biologi" id="n_biologi" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_biologi_uts" id="n_biologi_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Ekonomi</td>
+                            <td class="text-center"><input required name="n_ekonomi" id="n_ekonomi" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_ekonomi_uts" id="n_ekonomi_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Geografi</td>
+                            <td class="text-center"><input required name="n_geografi" id="n_geografi" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_geografi_uts" id="n_geografi_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Sosiologi</td>
+                            <td class="text-center"><input required name="n_sosiologi" id="n_sosiologi" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_sosiologi_uts" id="n_sosiologi_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Penjaskes</td>
+                            <td class="text-center"><input required name="n_penjaskes" id="n_penjaskes" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_penjaskes_uts" id="n_penjaskes_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Seni Budaya</td>
+                            <td class="text-center"><input required name="n_seni_budaya" id="n_seni_budaya" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_seni_budaya_uts" id="n_seni_budaya_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Sejarah Indonesia</td>
+                            <td class="text-center"><input required name="n_sejarah_indonesia" id="n_sejarah_indonesia" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_sejarah_indonesia_uts" id="n_sejarah_indonesia_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Informatika</td>
+                            <td class="text-center"><input required name="n_informatika" id="n_informatika" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_informatika_uts" id="n_informatika_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Bahasa Jawa</td>
+                            <td class="text-center"><input required name="n_bahasa_jawa" id="n_bahasa_jawa" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_bahasa_jawa_uts" id="n_bahasa_jawa_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Prakarya</td>
+                            <td class="text-center"><input required name="n_prakarya" id="n_prakarya" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_prakarya_uts" id="n_prakarya_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Bimbingan Konseling</td>
+                            <td class="text-center"><input required name="n_bimbingan_konseling" id="n_bimbingan_konseling" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_bimbingan_konseling_uts" id="n_bimbingan_konseling_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td><strong>Lainya</strong></td>
+                            <td class="text-center" colspan="2"><input required name="n_lainya" id="n_lainya" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="modal-footer">
+        <button type="reset" class="btn btn-light-secondary">
+          <i class="bx bx-x d-block d-sm-none"></i>
+          <span class="d-none d-sm-block">Reset</span>
+        </button>
+
+        <button type="submit" class="btn btn-primary ml-1" id="saveBtn">
+          <i class="bx bx-check d-block d-sm-none"></i>
+          <span class="d-none d-sm-block">Simpan</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+
 <div class="page-heading">
   <div class="page-title">
     <div class="row">
@@ -49,185 +398,7 @@
               </tr>
             </thead>
 
-            <!-- Nilai Siswa -->
-            <div class="modal fade" id="modal-nilai" tabindex="-1" role="dialog" aria-labelledby="nilaiTitle"
-              aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-                <div class="modal-content">
-                  <div class="modal-header bg-primary p-4">
-                    <h5 class="modal-title white" id="nilaiTitle">Nilai Siswa
-                    </h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                      <i data-feather="x"></i>
-                    </button>
-                  </div>
-                  <div class="modal-body pb-2 px-3">
-                    <div class="row">
-                        <div class="col-5">
-                            <h6 class="mb-0">Agama</h6>
-                        </div>
-                        <div class="col-7 text-secondary" id="agama">
-                            Nilai
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-5">
-                            <h6 class="mb-0">PKN</h6>
-                        </div>
-                        <div class="col-7 text-secondary" id="pkn">
-                            Nilai
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                      <div class="col-5">
-                          <h6 class="mb-0">Bahasa Indonesia</h6>
-                      </div>
-                      <div class="col-7 text-secondary" id="indo">
-                          Nilai
-                      </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-5">
-                        <h6 class="mb-0">Bahasa Inggris</h6>
-                    </div>
-                    <div class="col-7 text-secondary" id="inggris">
-                        Nilai
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-5">
-                        <h6 class="mb-0">Matematika</h6>
-                    </div>
-                    <div class="col-7 text-secondary" id="mtk">
-                        Nilai
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-5">
-                        <h6 class="mb-0">Fisika</h6>
-                    </div>
-                    <div class="col-7 text-secondary" id="fisika">
-                        Nilai
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-5">
-                        <h6 class="mb-0">Kimia</h6>
-                    </div>
-                    <div class="col-7 text-secondary" id="kimia">
-                        Nilai
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-5">
-                        <h6 class="mb-0">Biologi</h6>
-                    </div>
-                    <div class="col-7 text-secondary" id="biologi">
-                        Nilai
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-5">
-                        <h6 class="mb-0">Ekonomi</h6>
-                    </div>
-                    <div class="col-7 text-secondary" id="eko">
-                        Nilai
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-5">
-                        <h6 class="mb-0">Geografi</h6>
-                    </div>
-                    <div class="col-7 text-secondary" id="geo">
-                        Nilai
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-5">
-                        <h6 class="mb-0">Sosiologi</h6>
-                    </div>
-                    <div class="col-7 text-secondary" id="sosio">
-                        Nilai
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-5">
-                        <h6 class="mb-0">Penjaskes</h6>
-                    </div>
-                    <div class="col-7 text-secondary" id="penjas">
-                        Nilai
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-5">
-                        <h6 class="mb-0">Seni Budaya</h6>
-                    </div>
-                    <div class="col-7 text-secondary" id="seni">
-                        Nilai
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-5">
-                        <h6 class="mb-0">Sejarah Indonesia</h6>
-                    </div>
-                    <div class="col-7 text-secondary" id="sejarah">
-                        Nilai
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-5">
-                        <h6 class="mb-0">Informatika</h6>
-                    </div>
-                    <div class="col-7 text-secondary" id="if">
-                        Nilai
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-5">
-                        <h6 class="mb-0">Bahasa Jawa</h6>
-                    </div>
-                    <div class="col-7 text-secondary" id="jawa">
-                        Nilai
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-5">
-                        <h6 class="mb-0">Prakarya</h6>
-                    </div>
-                    <div class="col-7 text-secondary" id="prakarya">
-                        Nilai
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-5">
-                        <h6 class="mb-0">Bimbingan Konseling</h6>
-                    </div>
-                    <div class="col-7 text-secondary" id="bk">
-                        Nilai
-                    </div>
-                  </div>
-                  <hr>
-                  </div>
-                </div>
-              </div>
-            </div>
+
             {{-- Modal Import Nilai --}}
             <div class="modal fade" id="modal-import-nilai" tabindex="-1" role="dialog" aria-labelledby="tambahDataTitle"
               aria-hidden="true">
@@ -385,205 +556,6 @@
                 </div>
               </div>
             </div>
-            <!-- Tambah Data -->
-            <div class="modal fade" id="modal-siswa" tabindex="-1" role="dialog" aria-labelledby="tambahDataTitle"
-              aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-                <div class="modal-content">
-                  <div class="modal-header bg-primary p-4">
-                    <h5 class="modal-title white" id="tambahDataTitle">Tambah Siswa
-                    </h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                      <i data-feather="x"></i>
-                    </button>
-                  </div>
-                  <form class="form mb-0" id="formSiswa" name="formSiswa">
-                    <div class="modal-body py-0">
-                      <section id="multiple-column-form">
-                        <div class="row match-height">
-                          <div class="col-12">
-                            <div class="card mb-0">
-                              <div class="card-content">
-                                <div class="card-body">
-                                  <div class="row">
-                                    <input type="hidden" name="id_siswa" id="id_siswa">
-                                    <div class="col-12 text-center">
-                                      <p class="h4">Identitas Siswa</p>
-                                    </div>
-                                    <div class="col-12">
-                                      <div class="form-group">
-                                        <label for="asal_kelas" class="form-label">Kelas</label>
-                                        <select class="form-select" id="asal_kelas" name="asal_kelas"
-                                          data-placeholder="Pilih Kelas" required>
-                                          <option value=""></option>
-                                          <option value="X-01">X-01</option>
-                                          <option value="X-02">X-02</option>
-                                          <option value="X-03">X-03</option>
-                                          <option value="X-04">X-04</option>
-                                          <option value="X-05">X-05</option>
-                                          <option value="X-06">X-06</option>
-                                          <option value="X-07">X-07</option>
-                                          <option value="X-08">X-08</option>
-                                          <option value="X-09">X-09</option>
-                                          <option value="X-10">X-10</option>
-                                        </select>
-                                      </div>
-                                    </div>
-                                    <div class="col-12">
-                                      <div class="form-group">
-                                        <label for="nis" class="form-label">NIS</label>
-                                        <input type="text" id="nis" class="form-control" name="nis"
-                                          placeholder="Masukkan NIS ...." required>
-                                      </div>
-                                    </div>
-                                    <div class="col-12">
-                                      <div class="form-group">
-                                        <label for="nisn" class="form-label">NISN</label>
-                                        <input type="text" id="nisn" class="form-control" name="nisn"
-                                          placeholder="Masukkan NISN ...." required>
-                                      </div>
-                                    </div>
-                                    <div class="col-12">
-                                      <div class="form-group">
-                                        <label for="nama" class="form-label">Nama</label>
-                                        <input type="text" id="nama" class="form-control" name="nama"
-                                          placeholder="Masukkan Nama Siswa ...." required>
-                                      </div>
-                                    </div>
-                                    <div class="col-12 text-center mt-2">
-                                      <p class="h4">Nilai Siswa</p>
-                                    </div>
-                                    <div class="col-12">
-                                      <div class="form-group">
-                                        <label for="agama" class="form-label">Agama</label>
-                                        <input required name="n_agama" id="n_agama" placeholder="Masukkan Nilai ...."  type="number" value="0" step="0.01" min="0" max="100" class="form-control">
-                                      </div>
-                                    </div>
-                                    <div class="col-12">
-                                      <div class="form-group">
-                                        <label for="pkn" class="form-label">PKN</label>
-                                        <input required name="n_pkn" id="n_pkn" placeholder="Masukkan Nilai ...." value="0" type="number" step="0.01" min="0" max="100" class="form-control">
-                                      </div>
-                                    </div>
-                                    <div class="col-12">
-                                      <div class="form-group">
-                                        <label for="indo" class="form-label">Bahasa Indonesia</label>
-                                        <input required name="n_indo" id="n_indo" placeholder="Masukkan Nilai ...." value="0" type="number" step="0.01" min="0" max="100" class="form-control">
-                                      </div>
-                                    </div>
-                                    <div class="col-12">
-                                      <div class="form-group">
-                                        <label for="inggris" class="form-label">Bahasa Inggris</label>
-                                        <input required name="n_inggris" id="n_inggris" placeholder="Masukkan Nilai ...." value="0" type="number" step="0.01" min="0" max="100" class="form-control">
-                                      </div>
-                                    </div>
-                                    <div class="col-12">
-                                      <div class="form-group">
-                                        <label for="mtk" class="form-label">Matematika</label>
-                                        <input required name="n_mtk" id="n_mtk" placeholder="Masukkan Nilai ...." value="0" type="number" step="0.01" min="0" max="100" class="form-control">
-                                      </div>
-                                    </div>
-                                    <div class="col-12">
-                                      <div class="form-group">
-                                        <label for="fisika" class="form-label">Fisika</label>
-                                        <input required name="n_fisika" id="n_fisika" placeholder="Masukkan Nilai ...." value="0" type="number" step="0.01" min="0" max="100" class="form-control">
-                                      </div>
-                                    </div>
-                                    <div class="col-12">
-                                      <div class="form-group">
-                                        <label for="kimia" class="form-label">Kimia</label>
-                                        <input required name="n_kimia" id="n_kimia" placeholder="Masukkan Nilai ...." value="0" type="number" step="0.01" min="0" max="100" class="form-control">
-                                      </div>
-                                    </div>
-                                    <div class="col-12">
-                                      <div class="form-group">
-                                        <label for="biologi" class="form-label">Biologi</label>
-                                        <input required name="n_biologi" id="n_biologi" placeholder="Masukkan Nilai ...." value="0" type="number" step="0.01" min="0" max="100" class="form-control">
-                                      </div>
-                                    </div>
-                                    <div class="col-12">
-                                      <div class="form-group">
-                                        <label for="eko" class="form-label">Ekonomi</label>
-                                        <input required name="n_eko" id="n_eko" placeholder="Masukkan Nilai ...." value="0" type="number" step="0.01" min="0" max="100" class="form-control">
-                                      </div>
-                                    </div>
-                                    <div class="col-12">
-                                      <div class="form-group">
-                                        <label for="geo" class="form-label">Geografi</label>
-                                        <input required name="n_geo" id="n_geo" placeholder="Masukkan Nilai ...." value="0" type="number" step="0.01" min="0" max="100" class="form-control">
-                                      </div>
-                                    </div>
-                                    <div class="col-12">
-                                      <div class="form-group">
-                                        <label for="sosio" class="form-label">Sosiologi</label>
-                                        <input required name="n_sosio" id="n_sosio" placeholder="Masukkan Nilai ...." value="0" type="number" step="0.01" min="0" max="100" class="form-control">
-                                      </div>
-                                    </div>
-                                    <div class="col-12">
-                                      <div class="form-group">
-                                        <label for="penjas" class="form-label">Penjaskes</label>
-                                        <input required name="n_penjas" id="n_penjas" placeholder="Masukkan Nilai ...." value="0" type="number" step="0.01" min="0" max="100" class="form-control">
-                                      </div>
-                                    </div>
-                                    <div class="col-12">
-                                      <div class="form-group">
-                                        <label for="seni" class="form-label">Seni Budaya</label>
-                                        <input required name="n_seni" id="n_seni" placeholder="Masukkan Nilai ...." value="0" type="number" step="0.01" min="0" max="100" class="form-control">
-                                      </div>
-                                    </div>
-                                    <div class="col-12">
-                                      <div class="form-group">
-                                        <label for="sejarah" class="form-label">Sejarah Indonesia</label>
-                                        <input required name="n_sejarah" id="n_sejarah" placeholder="Masukkan Nilai ...." value="0" type="number" step="0.01" min="0" max="100" class="form-control">
-                                      </div>
-                                    </div>
-                                    <div class="col-12">
-                                      <div class="form-group">
-                                        <label for="if" class="form-label">Informatika</label>
-                                        <input required name="n_if" id="n_if" placeholder="Masukkan Nilai ...." value="0" type="number" step="0.01" min="0" max="100" class="form-control">
-                                      </div>
-                                    </div>
-                                    <div class="col-12">
-                                      <div class="form-group">
-                                        <label for="jawa" class="form-label">Bahasa Jawa</label>
-                                        <input required name="n_jawa" id="n_jawa" placeholder="Masukkan Nilai ...." value="0" type="number" step="0.01" min="0" max="100" class="form-control">
-                                      </div>
-                                    </div>
-                                    <div class="col-12">
-                                      <div class="form-group">
-                                        <label for="prakarya" class="form-label">Prakarya</label>
-                                        <input required name="n_prakarya" id="n_prakarya" placeholder="Masukkan Nilai ...." value="0" type="number" step="0.01" min="0" max="100" class="form-control">
-                                      </div>
-                                    </div>
-                                    <div class="col-12">
-                                      <div class="form-group">
-                                        <label for="bk" class="form-label">Bimbingan Konseling</label>
-                                        <input required name="n_bk" id="n_bk" placeholder="Masukkan Nilai ...." value="0" type="number" step="0.01" min="0" max="100" class="form-control">
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </section>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="reset" class="btn btn-light-secondary">
-                        <i class="bx bx-x d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Reset</span>
-                      </button>
-
-                      <button type="submit" class="btn btn-primary ml-1" id="saveBtn">
-                        <i class="bx bx-check d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Simpan</span>
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
           </table>
         </div>
       </div>
@@ -647,7 +619,7 @@
                 {data: 'nis', name: 'nis', width: "10%"},
                 {data: 'nisn', name: 'nisn', width: "15%"},
                 {data: 'nama', name: 'nama'},
-                {data: 'asal_kelas', name: 'asal_kelas', width: "15%"},
+                {data: 'kelas', name: 'kelas', width: "15%"},
                 {data: 'aksi', name: 'aksi', searchable: false,},
             ],
             initComplete: function () {
@@ -732,24 +704,46 @@
             var id_kelas = $(this).data('id');
             $.get("{{route('siswa.index')}}" + '/' + id_kelas + '/edit', function (data) {
                 $('#modal-nilai').modal('show');
+                $('#nama_').html(data.nama);
+                $('#nis_').html(data.nis);
+                $('#kelas_').html(data.kelas);
                 $('#agama').html(data.agama);
                 $('#pkn').html(data.pkn);
-                $('#indo').html(data.indo);
-                $('#inggris').html(data.inggris);
-                $('#mtk').html(data.mtk);
+                $('#bahasa_indonesia').html(data.bahasa_indonesia);
+                $('#bahasa_inggris').html(data.bahasa_inggris);
+                $('#matematika').html(data.matematika);
                 $('#fisika').html(data.fisika);
                 $('#kimia').html(data.kimia);
                 $('#biologi').html(data.biologi);
-                $('#eko').html(data.eko);
-                $('#geo').html(data.geo);
-                $('#sosio').html(data.sosio);
-                $('#penjas').html(data.penjas);
-                $('#seni').html(data.seni);
-                $('#sejarah').html(data.sejarah);
-                $('#if').html(data.if);
-                $('#jawa').html(data.jawa);
+                $('#ekonomi').html(data.ekonomi);
+                $('#geografi').html(data.geografi);
+                $('#sosiologi').html(data.sosiologi);
+                $('#penjaskes').html(data.penjaskes);
+                $('#seni_budaya').html(data.seni_budaya);
+                $('#sejarah_indonesia').html(data.sejarah_indonesia);
+                $('#informatika').html(data.informatika);
+                $('#bahasa_jawa').html(data.bahasa_jawa);
                 $('#prakarya').html(data.prakarya);
-                $('#bk').html(data.bk);
+                $('#bimbingan_konseling').html(data.bimbingan_konseling);
+                $('#agama_uts').html(data.agama_uts);
+                $('#pkn_uts').html(data.pkn_uts);
+                $('#bahasa_indonesia_uts').html(data.bahasa_indonesia_uts);
+                $('#bahasa_inggris_uts').html(data.bahasa_inggris_uts);
+                $('#matematika_uts').html(data.matematika_uts);
+                $('#fisika_uts').html(data.fisika_uts);
+                $('#kimia_uts').html(data.kimia_uts);
+                $('#biologi_uts').html(data.biologi_uts);
+                $('#ekonomi_uts').html(data.ekonomi_uts);
+                $('#geografi_uts').html(data.geografi_uts);
+                $('#sosiologi_uts').html(data.sosiologi_uts);
+                $('#penjaskes_uts').html(data.penjaskes_uts);
+                $('#seni_budaya_uts').html(data.seni_budaya_uts);
+                $('#sejarah_indonesia_uts').html(data.sejarah_indonesia_uts);
+                $('#informatika_uts').html(data.informatika_uts);
+                $('#bahasa_jawa_uts').html(data.bahasa_jawa_uts);
+                $('#prakarya_uts').html(data.prakarya_uts);
+                $('#bimbingan_konseling_uts').html(data.bimbingan_konseling_uts);
+                $('#lainya').html(data.lainya);
             })
         });
         // initialize btn add
@@ -768,25 +762,44 @@
                 $('#nis').val(data.nis);
                 $('#nisn').val(data.nisn);
                 $('#nama').val(data.nama);
-                $('#asal_kelas').val(data.asal_kelas).change();
+                $('#asal_kelas').val(data.kelas).change();
                 $('#n_agama').val(data.agama);
                 $('#n_pkn').val(data.pkn);
-                $('#n_indo').val(data.indo);
-                $('#n_inggris').val(data.inggris);
-                $('#n_mtk').val(data.mtk);
+                $('#n_bahasa_indonesia').val(data.bahasa_indonesia);
+                $('#n_bahasa_inggris').val(data.bahasa_inggris);
+                $('#n_matematika').val(data.matematika);
                 $('#n_fisika').val(data.fisika);
                 $('#n_kimia').val(data.kimia);
                 $('#n_biologi').val(data.biologi);
-                $('#n_eko').val(data.eko);
-                $('#n_geo').val(data.geo);
-                $('#n_sosio').val(data.sosio);
-                $('#n_penjas').val(data.penjas);
-                $('#n_seni').val(data.seni);
-                $('#n_sejarah').val(data.sejarah);
-                $('#n_if').val(data.if);
-                $('#n_jawa').val(data.jawa);
+                $('#n_ekonomi').val(data.ekonomi);
+                $('#n_geografi').val(data.geografi);
+                $('#n_sosiologi').val(data.sosiologi);
+                $('#n_penjaskes').val(data.penjaskes);
+                $('#n_seni_budaya').val(data.seni_budaya);
+                $('#n_sejarah_indonesia').val(data.sejarah_indonesia);
+                $('#n_informatika').val(data.informatika);
+                $('#n_bahasa_jawa').val(data.bahasa_jawa);
                 $('#n_prakarya').val(data.prakarya);
-                $('#n_bk').val(data.bk);
+                $('#n_bimbingan_konseling').val(data.bimbingan_konseling);
+                $('#n_agama_uts').val(data.agama_uts);
+                $('#n_pkn_uts').val(data.pkn_uts);
+                $('#n_bahasa_indonesia_uts').val(data.bahasa_indonesia_uts);
+                $('#n_bahasa_inggris_uts').val(data.bahasa_inggris_uts);
+                $('#n_matematika_uts').val(data.matematika_uts);
+                $('#n_fisika_uts').val(data.fisika_uts);
+                $('#n_kimia_uts').val(data.kimia_uts);
+                $('#n_biologi_uts').val(data.biologi_uts);
+                $('#n_ekonomi_uts').val(data.ekonomi_uts);
+                $('#n_geografi_uts').val(data.geografi_uts);
+                $('#n_sosiologi_uts').val(data.sosiologi_uts);
+                $('#n_penjaskes_uts').val(data.penjaskes_uts);
+                $('#n_seni_budaya_uts').val(data.seni_budaya_uts);
+                $('#n_sejarah_indonesia_uts').val(data.sejarah_indonesia_uts);
+                $('#n_informatika_uts').val(data.informatika_uts);
+                $('#n_bahasa_jawa_uts').val(data.bahasa_jawa_uts);
+                $('#n_prakarya_uts').val(data.prakarya_uts);
+                $('#n_bimbingan_konseling_uts').val(data.bimbingan_konseling_uts);
+                $('#n_lainya').val(data.lainya);
             })
         });
         // initialize btn save

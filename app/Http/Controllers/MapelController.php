@@ -28,32 +28,7 @@ class MapelController extends Controller
             'title' => 'Mata Pelajaran',
         ]);
     }
-
-    // public function import(StoreKelasRequest $request)
-    // {
-    //     $this->validate($request, [
-    //         'file' => 'required|mimes:csv,xls,xlsx'
-    //     ]);
-    //     $file = $request->file('file');
-    //     // membuat nama file unik
-    //     $nama_file = $file->hashName();
-    //     //temporary file
-    //     $path = $file->storeAs('public/excel/',$nama_file);
-    //     // import data
-    //     $import = Excel::import(new KelasImport(), storage_path('app/public/excel/'.$nama_file));
-    //     //remove from server
-    //     Storage::delete($path);
-    //     Storage::delete('app/public/excel/'.$nama_file);
-    //     Storage::delete('public/excel/'.$nama_file);
-    //     if($import) {
-    //         //redirect
-    //         return redirect()->route('kelas.index')->with(['success' => 'Data Berhasil Diimport!']);
-    //     } else {
-    //         //redirect
-    //         return redirect()->route('kelas.index')->with(['error' => 'Data Gagal Diimport!']);
-    //     }
-    // }
-
+    
     // /**
     //  * Show the form for creating a new resource.
     //  *

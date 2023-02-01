@@ -72,21 +72,21 @@
                     </a>
                 </li> --}}
 
-                <li class="sidebar-item {{ ($title === "Mata Pelajaran") ? 'active' : '' }}">
+                <li class="{{ (auth()->user()->id > 0) ? 'd-none' : '' }} sidebar-item {{ ($title === "Mata Pelajaran") ? 'active' : '' }}">
                     <a href="{{ route('mapel.index') }}" class='sidebar-link'>
                         <i class="bi bi-people-fill"></i>
                         <span>Mapel Peminatan</span>
                     </a>
                 </li>
 
-                <li class="sidebar-item {{ ($title === "Kelas") ? 'active' : '' }}">
+                <li class="{{ (auth()->user()->id > 0) ? 'd-none' : '' }} sidebar-item {{ ($title === "Kelas") ? 'active' : '' }}">
                     <a href="{{ route('kelas.index') }}" class='sidebar-link'>
                         <i class="bi bi-book-fill"></i>
                         <span>Kelas</span>
                     </a>
                 </li>
 
-                <li class="sidebar-item {{ ($title === "Siswa") ? 'active' : '' }}">
+                <li class="{{ (auth()->user()->id > 0) ? 'd-none' : '' }} sidebar-item {{ ($title === "Siswa") ? 'active' : '' }}">
                     <a href="{{ route('siswa.index') }}" class='sidebar-link'>
                         <i class="bi bi-people-fill"></i>
                         <span>Siswa</span>

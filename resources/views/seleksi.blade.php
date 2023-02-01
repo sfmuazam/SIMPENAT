@@ -57,20 +57,32 @@
                                     <div class="modal-body">
 
                                         <div class="row">
-                                        <span class="text-muted font-extrabold">NIS : {{ auth()->user()->id }}</span>
+                                        <span class="text-muted font-extrabold">NIS : <font id="nis">{{ auth()->user()->id }}</font></span>
                                         <span class="text-muted font-extrabold">Nama : {{ auth()->user()->name }}</span>
-                                        <span class="text-muted font-extrabold" id="kelas_tujuan">Kelas Tujuan : </span>
+                                        <span class="text-muted font-extrabold">Kelas Tujuan : <font id="kelas_tujuan"></font></span>
+                                        <span class="text-muted font-extrabold">Kapasitas : <font id="kapasitas"></font></span>
 
                                         <div class="col-6">
                                             <div class="form-group">
-                                        <span class="text-muted font-extrabold">Mapel</span>
+                                        <span class="text-muted font-extrabold">Mapel<br></span>
                                                 <span id="mapel_pilihan"></span>
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <span class="text-muted font-extrabold">Nilai</span>
+                                                <span class="text-muted font-extrabold">Nilai<br></span>
                                                     <span id="nilai_pilihan"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                        <span class="text-muted font-extrabold">Jumlah<br></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <span class="text-muted font-extrabold" id="jumlah_akhir">Nilai<br></span>
                                             </div>
                                         </div>
 
@@ -81,7 +93,7 @@
                                             <span class="d-none d-sm-block">Batal</span>
                                         </button>
 
-                                        <button type="button" class="btn btn-primary ml-1" data-bs-dismiss="modal">
+                                        <button id="saveBtn" type="button" class="btn btn-primary ml-1" data-bs-dismiss="modal">
                                             <i class="bx bx-check d-block d-sm-none"></i>
                                             <span class="d-none d-sm-block">Simpan</span>
                                         </button>
@@ -163,6 +175,7 @@
             var id_kelas = $(this).data('id');
             $.get("{{route('seleksi.index')}}" + '/' + id_kelas + '/edit', function (data) {
                 $('#modal-kelas').modal('show');
+                $('#kelas_tujuan').html(data.nama_kelas);
 
                 var mpl = data.mapel_penilaian;
                 mpl = mpl.split(',');
@@ -180,6 +193,8 @@
                     nilai += item+'<br>'
                 })
                 $('#nilai_pilihan').html(nilai);
+                $('#kapasitas').html(data.kapasitas);
+                $('#jumlah_akhir').html(data.jumlah_akhir);
             })
         });
         // initialize btn save
@@ -187,17 +202,21 @@
             e.preventDefault();
 
             $.ajax({
-                data: $('#formKelas').serialize(),
+                data: {
+                    nis: $('#nis').html(),
+                    nilai_akhir: $('#jumlah_akhir').html(),
+                    kelas_tujuan: $('#kelas_tujuan').html(),
+                    kapasitas: $('#kapasitas').html(),
+                },
                 url: "{{ route('seleksi.store') }}",
                 type: "POST",
                 dataType: 'json',
                 success: function (data) {
-
+                    console.log(data);
                     $('#formKelas').trigger("reset");
                     $('#modal-kelas').modal('hide');
                     swal_success();
                     table.draw();
-
                 },
                 error: function (data) {
                     console.log(data);
