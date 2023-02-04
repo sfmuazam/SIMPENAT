@@ -743,7 +743,8 @@ aria-hidden="true">
                 $('#bahasa_jawa_uts').html(data.bahasa_jawa_uts);
                 $('#prakarya_uts').html(data.prakarya_uts);
                 $('#bimbingan_konseling_uts').html(data.bimbingan_konseling_uts);
-                $('#lainya').html(data.lainya);
+                $('#lainya').html(data.riwayat[0]['id']);
+                console.log(data.riwayat);
             })
         });
         // initialize btn add

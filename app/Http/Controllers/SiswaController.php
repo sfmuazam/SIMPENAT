@@ -10,6 +10,7 @@ use App\Imports\NilaiImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Siswa;
 use App\Models\User;
+use App\Models\Riwayat;
 
 class SiswaController extends Controller
 {
@@ -32,6 +33,7 @@ class SiswaController extends Controller
         return view('siswa', [
             'title' => 'Siswa',
             'daftar_mapel' => Siswa::all(),
+
         ]);
     }
 
@@ -170,6 +172,7 @@ class SiswaController extends Controller
     public function edit($id)
     {
         $kelas = Siswa::find($id);
+        $kelas->riwayat = Riwayat::where('nis', $kelas->nis)->get();
         return response()->json($kelas);
     }
 

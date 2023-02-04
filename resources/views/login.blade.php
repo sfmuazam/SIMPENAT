@@ -23,7 +23,7 @@
                     <h1 class="auth-title">Masuk</h1>
                     <p class="auth-subtitle mb-5"></p>
 
-                    <form action="/login" method="post" autocomplete="off">
+                    <form action="{{ route('login') }}" method="post" autocomplete="off">
                         @csrf
                         <div class="form-group position-relative has-icon-left mb-4">
                             <input type="text" class="form-control form-control-xl" placeholder="Username"

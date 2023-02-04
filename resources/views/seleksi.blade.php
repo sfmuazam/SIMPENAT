@@ -75,6 +75,18 @@
                                             </div>
                                         </div>
 
+
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                        <span class="">Lainnya<br></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <span class="" id="lainya">Nilai<br></span>
+                                            </div>
+                                        </div>
+
                                         <div class="col-6">
                                             <div class="form-group">
                                         <span class="text-muted font-extrabold">Jumlah<br></span>
@@ -193,6 +205,7 @@
                     nilai += item+'<br>'
                 })
                 $('#nilai_pilihan').html(nilai);
+                $('#lainya').html(data.lainya);
                 $('#kapasitas').html(data.kapasitas);
                 $('#jumlah_akhir').html(data.jumlah_akhir);
             })

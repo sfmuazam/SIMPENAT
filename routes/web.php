@@ -25,11 +25,11 @@ Route::get('/', [SeleksiController::class, 'index'])->middleware('auth');
 // login
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'auth'])->middleware('guest');
-Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
 
 // profil
-Route::get('/profil', [ProfilController::class, 'index'])->middleware('auth');
-Route::post('/profil/pass', [ProfilController::class, 'change_pass'])->middleware('auth');
+Route::get('/profil', [ProfilController::class, 'index'])->name('profil.index')->middleware('auth');
+Route::post('/profil/pass', [ProfilController::class, 'change_pass'])->name('profil.pass')->middleware('auth');
 
 // mapel
 Route::resource('mapel', MapelController::class)->middleware('admin');
@@ -55,4 +55,5 @@ Route::resource('seleksi', SeleksiController::class)->middleware('auth');
 Route::get('/seleksi', [SeleksiController::class, 'index'])->name('seleksi.index')->middleware('auth');
 Route::delete('/seleksi', [SeleksiController::class, 'deleteAll'])->name('seleksi.deleteAll')->middleware('auth');
 Route::post('/seleksi/import', [SeleksiController::class, 'import'])->name('seleksi.import')->middleware('auth');
+Route::post('/seleksi/kick/{siswa:nis}', [SeleksiController::class, 'kick'])->name('seleksi.kick')->middleware('auth');
 Route::get('/seleksi/{kelas:nama_kelas}', [SeleksiController::class, 'show'])->name('seleksi.show')->middleware('auth');

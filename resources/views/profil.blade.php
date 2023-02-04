@@ -289,13 +289,30 @@ aria-hidden="true">
         e.preventDefault();
         $.ajax({
             data: $('#formPass').serialize(),
-            url: "{{ url('profil/pass') }}",
+            url: "{{ route('profil.pass') }}",
             type: "POST",
             dataType: 'json',
             success: function (data) {
                 $('#formPass').trigger("reset");
                 $('#modal-password').modal('hide');
-                swal_success();
+                if(data.failed != null) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: ''+data.failed,
+                        showConfirmButton: false,
+                        timer: 1000
+                    })
+                } else {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: ''+data.success,
+                        showConfirmButton: false,
+                        timer: 1000
+                    })
+                }
+
             },
             error: function (data) {
                 console.log(data);

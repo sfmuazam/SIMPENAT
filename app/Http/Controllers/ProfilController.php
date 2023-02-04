@@ -74,16 +74,16 @@ class ProfilController extends Controller
 
         if (!(Hash::check($request->get('old'), $user->password))) {
             // The passwords matches
-            return response()->json(['failed' => "Kata sandi lama salah."]);
+            return response()->json(['failed' => "Kata Sandi Gagal Diperbarui!"]);
         }
 
         if (strcmp($request->get('old'), $request->get('new')) == 0) {
             // Current password and new password same
-            return response()->json(['failed' => "Kata sandi baru tidak boleh sama dengan kata sandi lama."]);
+            return response()->json(['failed' => "Kata Sandi Gagal Diperbarui!"]);
         }
 
         if ($request->get('new') != $request->get('conf')) {
-            return response()->json(['failed' => "Kata sandi baru tidak sesuai."]);
+            return response()->json(['failed' => "Kata Sandi Gagal Diperbarui!"]);
         }
 
         $id = strval(auth()->user()->id);

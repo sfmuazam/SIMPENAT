@@ -44,7 +44,7 @@
                 <li class="sidebar-title">Profil</li>
 
                 <li class="sidebar-item {{ ($title === "Profil") ? 'active' : '' }}">
-                    <a href="/profil" class='sidebar-link'>
+                    <a href="{{ route('profil.index') }}" class='sidebar-link'>
                         <i class="bi bi-person-circle"></i>
                         <span>Profil</span>
                     </a>
@@ -100,36 +100,15 @@
                     </a>
                 </li>
 
-                {{-- <li class="sidebar-item {{ ($title === "Tabungan") ? 'active' : '' }}">
-                    <a href="/tabungan" class='sidebar-link'>
-                        <i class="bi bi-cash-coin"></i>
-                        <span>Tabungan</span>
+                <li class="sidebar-item {{ ($title === "Riwayat") ? 'active' : '' }}">
+                    <a href="{{ route('riwayat.index') }}" class='sidebar-link'>
+                        <i class="bi bi-people-fill"></i>
+                        <span>Riwayat</span>
                     </a>
                 </li>
 
-                <li class="sidebar-item {{ ($title === "Kelas 10" || $title === "Kelas 11" || $title === "Kelas 12" ||  $title==="Total Per Siswa" ) ? 'active' : '' }} has-sub">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-stack"></i>
-                        <span>Rekap</span>
-                    </a>
-                    <ul class="submenu {{ ($title === "Kelas 10" || $title === "Kelas 11" || $title === "Kelas 12" || $title==="Total Per Siswa" ) ? 'active' : '' }}">
-                        <li class="submenu-item {{ ($title === "Kelas 10") ? 'active' : '' }}">
-                            <a href="/kelas10">Kelas 10</a>
-                        </li>
-                        <li class="submenu-item {{ ($title === "Kelas 11") ? 'active' : '' }}">
-                            <a href="/kelas11">Kelas 11</a>
-                        </li>
-                        <li class="submenu-item {{ ($title === "Kelas 12") ? 'active' : '' }}">
-                            <a href="/kelas12">Kelas 12</a>
-                        </li>
-                        <li class="submenu-item {{ ($title === "Total Per Siswa") ? 'active' : '' }}">
-                            <a href="/totalpersiswa">Total Per Siswa</a>
-                        </li>
-                    </ul>
-                </li> --}}
-
                 <li class="sidebar-item {{ ($title === "Logout") ? 'active' : '' }}">
-                    <form action="/logout" method="post">
+                    <form action="{{ route('logout') }}" method="post">
                         @csrf
                         <button class='sidebar-link'>
                             <i class="bi bi-box-arrow-left"></i>
