@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('id', 10)->primary();
             $table->string('name');
             $table->string('password');
+            $table->string('cover')->nullable();
+            $table->string('status')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

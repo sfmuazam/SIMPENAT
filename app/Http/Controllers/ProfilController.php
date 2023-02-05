@@ -12,7 +12,8 @@ class ProfilController extends Controller
 {
     public function index()
     {
-        if (auth()->user()->id == 0) {
+        $status = User::where('id', 'admin')->first()->status;
+        if (auth()->user()->id === 0) {
             $nilai = [
                 'nis' => '',
                 'nisn' => '',
@@ -64,7 +65,8 @@ class ProfilController extends Controller
         return view('profil', [
             'title' => 'Profil',
             'nilai' => $nilai,
-            'riwayat' => $riwayat
+            'riwayat' => $riwayat,
+            'status' => $status
         ]);
     }
 
@@ -87,10 +89,66 @@ class ProfilController extends Controller
         }
 
         $id = strval(auth()->user()->id);
+        if (auth()->user()->id === 0) {
+            $id = 'admin';
+        }
         // Change Password
         $pass = ['password' => bcrypt($request->new)];
         User::where('id', '=', $id)->update($pass);
 
         return response()->json(['success' => 'Kata Sandi Berhasil Diperbarui!']);
+    }
+
+    public function cover(Request $request)
+    {
+        $change = User::where('id', 'admin')->first();
+        if ($request->reset == 1) {
+            unlink(public_path("images/$change->cover"));
+            $input = [
+                'cover' => 'default.jpg'
+            ];
+            User::where('id', 'admin')->update($input);
+        } else {
+            $file = $request->file('image');
+            if ($file->getSize() > 5000000) {
+                return back()->with('gagal', 'Ukuran maksimal foto adalah 5MB.');
+            }
+            if ($file->getMimeType() != 'image/jpeg' and $file->getMimeType() != 'image/png') {
+                return back()->with('gagal', 'Format file yang di perbolehkan adalah png, jpg, atau jpeg.');
+            }
+            if ($change->cover != 'default.jpg') {
+                unlink(public_path("images/$change->cover"));
+            }
+            $filename = 'cover.' . pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+            $file->move(public_path('images'), $filename);
+
+            $input = [
+                'cover' => $filename
+            ];
+            User::where('id', 'admin')->update($input);
+        }
+        return back()->with('sukses', 'Foto sampul berhasil diperbarui.');
+    }
+
+    public function buka()
+    {
+        User::where('id', 'admin')->update([
+            'status' => 'Aktif'
+        ]);
+        Riwayat::where('status', 'Diterima')->update([
+            'status' => 'Proses Seleksi'
+        ]);
+        return back()->with('sukses', 'Seleksi berhasil dibuka.');
+    }
+
+    public function tutup()
+    {
+        User::where('id', 'admin')->update([
+            'status' => 'Tidak Aktif'
+        ]);
+        Riwayat::where('status', 'Proses Seleksi')->update([
+            'status' => 'Diterima'
+        ]);
+        return back()->with('sukses', 'Seleksi berhasil ditutup.');
     }
 }

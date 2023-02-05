@@ -8,6 +8,7 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Models\Mapel;
 use App\Models\Kelas;
 use App\Models\Siswa;
+use App\Models\User;
 use App\Models\Riwayat;
 
 class SeleksiController extends Controller
@@ -51,82 +52,140 @@ class SeleksiController extends Controller
                     foreach ($mapel_dinilai as $row) {
                         $nilai += $nilai_seleksi->$row;
                     }
+                    foreach ($mapel_dinilai as $row) {
+                        $mapel_uts = $row . '_uts';
+                        $nilai += $nilai_seleksi->$mapel_uts;
+                    }
+                    $nilai += $nilai_seleksi->lainya;
                     if ($passing_grade)
                         return $nilai . "/" . $passing_grade->nilai_akhir;
                     else
                         return '0';
                 }
             })->addColumn('aksi', function ($data) {
+                $status = User::where('id', 'admin')->first()->status;
                 $button = '';
-                if(auth()->user()->id != '0')
-                if(Siswa::where('nis',auth()->user()->id)->value('kelas_tujuan') == null)
-                $button .= '<div data-toggle="tooltip" data-id="' . $data->id . '" data-original-title="Edit" class="btn btn-sm btn-icon btn-success btn-circle mr-2 edit editKelas"><i class="bi bi-plus-circle"></i></div>';
-                $button .= ' <a href="/seleksi/'.$data->nama_kelas.'"><div data-toggle="tooltip" data-id="' . $data->id . '" data-original-title="Info" class="btn btn-sm btn-icon btn-primary btn-circle mr-2 infoJurnal"><i class="bi bi-info-circle"></i></div></a>';
+                if (auth()->user()->id != '0')
+                    if (Siswa::where('nis', auth()->user()->id)->value('kelas_tujuan') == null and $status == 'Aktif')
+                        $button .= '<div data-toggle="tooltip" data-id="' . $data->id . '" data-original-title="Edit" class="btn btn-sm btn-icon btn-success btn-circle mr-2 edit editKelas"><i class="bi bi-plus-circle"></i></div>';
+                $link = route('seleksi.index') . '/' . $data->nama_kelas;
+                $button .= ' <a href="' . $link . '"><div data-toggle="tooltip" data-id="' . $data->id . '" data-original-title="Info" class="btn btn-sm btn-icon btn-primary btn-circle mr-2 infoJurnal"><i class="bi bi-info-circle"></i></div></a>';
                 return $button;
             })->rawColumns(['mapel_peminatan', 'nilai', 'mapel_penilaian', 'aksi'])->make(true);
         }
         return view('seleksi', [
             'title' => 'Seleksi',
             'daftar_mapel' => Mapel::orderBy('nama_mapel')->get(),
+            'status' => Siswa::where('nis', auth()->user()->id)->value('kelas_tujuan')
         ]);
     }
 
     public function show(Request $request, $nama_kelas)
     {
         if (request()->ajax()) {
-            $siswa = Siswa::select(['nis','nisn','nama','siswa.kelas','nilai_akhir','kelas_tujuan'])->where('kelas_tujuan',$nama_kelas);
+            $siswa = Siswa::select(['nis', 'nisn', 'nama', 'siswa.kelas', 'nilai_akhir', 'kelas_tujuan'])->where('kelas_tujuan', $nama_kelas);
 
             return DataTables::of($siswa)
-            ->addColumn('checkbox',function ($data) {
-                return '<input type="checkbox" class="sub_chk" data-id="'.$data->id.'">';
-        })->addColumn('aksi', function ($data) {
-                $button = ' <div data-toggle="tooltip" data-id="'.$data->nis.'" data-original-title="Delete" class="btn btn-sm btn-icon btn-danger btn-circle mr-2 deleteKelas"><i
+                ->addColumn('checkbox', function ($data) {
+                    return '<input type="checkbox" class="sub_chk" data-id="' . $data->id . '">';
+                })->addColumn('aksi', function ($data) {
+                    $button = ' <div data-toggle="tooltip" data-id="' . $data->nis . '" data-original-title="Delete" class="btn btn-sm btn-icon btn-danger btn-circle mr-2 deleteKelas"><i
               class="bi bi-trash-fill"></i></div>';
-                return $button;
-            })->rawColumns(['checkbox','aksi'])->make();
+                    return $button;
+                })->rawColumns(['checkbox', 'aksi'])->make();
         }
 
         return view('rekapSeleksi', [
             "title" => "Seleksi",
             'namakelas' => $nama_kelas,
-            'datasiswa' => Siswa::select(['nis','nama','kelas'])->get(),
+            'datasiswa' => Siswa::select(['nis', 'nama', 'kelas'])->get(),
         ]);
     }
 
     public function store(Request $request)
     {
-        Siswa::where('nis',auth()->user()->id)->update(
+        Siswa::where('nis', auth()->user()->id)->update(
             [
                 'kelas_tujuan' => $request->kelas_tujuan,
                 'nilai_akhir' => $request->nilai_akhir,
             ]
         );
         Riwayat::create([
-          'nis' => auth()->user()->id,
-          'kelas_tujuan' => $request->kelas_tujuan,
-          'nilai_akhir' => $request->nilai_akhir,
+            'nis' => auth()->user()->id,
+            'kelas_tujuan' => $request->kelas_tujuan,
+            'nilai_akhir' => $request->nilai_akhir,
         ]);
         $passing_grade = Siswa::where('kelas_tujuan', $request->kelas_tujuan)->orderBy('nilai_akhir', 'desc')->get();
 
-        if($passing_grade->count() > 36){
-        Siswa::where('nis',$passing_grade[$request->kapasitas]->nis)->update(
+        if ($passing_grade->count() > $request->kapasitas) {
+            Siswa::where('nis', $passing_grade[$request->kapasitas]->nis)->update(
+                [
+                    'kelas_tujuan' => null,
+                    'nilai_akhir' => '0',
+                ]
+            );
+            Riwayat::where('nis', $passing_grade[$request->kapasitas]->nis)->update(
+                [
+                    'status' => 'Ditolak'
+                ]
+            );
+        }
+
+        return response()->json(['success' => 'Data Berhasil Ditambahkan!']);
+    }
+
+    public function tambah(Request $request)
+    {
+        $segments = request()->segments();
+        $last  = end($segments);
+        $nilai_seleksi = Siswa::where('nis', $request->nis)->first();
+        $mapel_dinilai = explode(",", Kelas::where('nama_kelas', $last)->value('mapel_penilaian'));
+        sort($mapel_dinilai);
+        $nilai = 0;
+        foreach ($mapel_dinilai as $row) {
+            $nilai += $nilai_seleksi->$row;
+        }
+        Siswa::where('nis', $request->nis)->update(
             [
-                'kelas_tujuan' => null,
-                'nilai_akhir' => '0',
+                'kelas_tujuan' => $request->kelas_tujuan,
+                'nilai_akhir' => $nilai,
             ]
         );
-        
-    }
+        Riwayat::create([
+            'nis' => auth()->user()->id,
+            'kelas_tujuan' => $request->kelas_tujuan,
+            'nilai_akhir' => $request->nilai_akhir,
+        ]);
+        $passing_grade = Siswa::where('kelas_tujuan', $request->kelas_tujuan)->orderBy('nilai_akhir', 'desc')->get();
+
+        if ($passing_grade->count() > $request->kapasitas) {
+            Siswa::where('nis', $passing_grade[$request->kapasitas]->nis)->update(
+                [
+                    'kelas_tujuan' => null,
+                    'nilai_akhir' => '0',
+                ]
+            );
+            Riwayat::where('nis', $passing_grade[$request->kapasitas]->nis)->update(
+                [
+                    'status' => 'Ditolak'
+                ]
+            );
+        }
 
         return response()->json(['success' => 'Data Berhasil Ditambahkan!']);
     }
 
     public function kick($id)
     {
-        Siswa::where('nis',$id)->update(
+        Siswa::where('nis', $id)->update(
             [
                 'kelas_tujuan' => null,
                 'nilai_akhir' => 0,
+            ]
+        );
+        Riwayat::where('nis', $id)->update(
+            [
+                'status' => 'Ditolak'
             ]
         );
 
@@ -137,7 +196,7 @@ class SeleksiController extends Controller
     {
         $kelas = Kelas::find($id);
         $siswa = Siswa::where('nis', auth()->user()->id)->first();
-        $mapel_dinilai = explode(",", Kelas::where('nama_kelas',$kelas->nama_kelas)->value('mapel_penilaian'));
+        $mapel_dinilai = explode(",", Kelas::where('nama_kelas', $kelas->nama_kelas)->value('mapel_penilaian'));
         sort($mapel_dinilai);
         $nilai = array();
         $i = 0;
@@ -150,7 +209,7 @@ class SeleksiController extends Controller
         }
         $i = 0;
         foreach ($mapel_dinilai as $row) {
-            $mapel_uts = $row.'_uts';
+            $mapel_uts = $row . '_uts';
             $nilai[$i] += $siswa->$mapel_uts;
             $kelas->jumlah_akhir += $siswa->$mapel_uts;
             $i++;
@@ -168,10 +227,15 @@ class SeleksiController extends Controller
 
     public function destroy($id)
     {
-        Siswa::where('nis',$id)->update(
+        Siswa::where('nis', $id)->update(
             [
                 'kelas_tujuan' => null,
                 'nilai_akhir' => 0,
+            ]
+        );
+        Riwayat::where('nis', $id)->update(
+            [
+                'status' => 'Ditolak'
             ]
         );
 

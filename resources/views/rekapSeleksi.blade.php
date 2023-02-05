@@ -5,7 +5,7 @@
     <div class="page-title">
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3>Siswa</h3>
+                <h3>Rekap Seleksi</h3>
             </div>
         </div>
     </div>
@@ -13,20 +13,20 @@
     <section class="section">
         <input type="hidden" id="nama_kelas" value="{{ $namakelas }}">
         <div class="card">
+            @if(auth()->user()->id == '0')
             <div class="card-header">
                 <div class="justify-content-between d-flex">
                     <div class="form-group">
                     </div>
-                    @if(auth()->user()->id == '0')
                     <div class="tambah">
                         <button type="button" id="createNewSiswa" class="btn btn-primary block" data-bs-toggle="modal"
                             data-bs-target="#modal-siswa">
                             Tambah Siswa
                         </button>
                     </div>
-                    @endif
                 </div>
             </div>
+            @endif
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table" id="table1">
@@ -136,11 +136,12 @@
             placeholder: $( this ).data( 'placeholder' ),
             dropdownParent: '#modal-siswa',
         });
-
+        @if(auth()->user()->id == '0')
         $('#table1 thead tr')
         .clone(true)
         .addClass('filters')
         .appendTo('#table1 thead');
+        @endif
     // table serverside
     var table = $('#table1').DataTable({
             dom: 'lBfrtip',
@@ -193,6 +194,7 @@
                 {data: 'aksi', name: 'aksi', searchable: false,},
                 @endif
             ],
+            @if(auth()->user()->id == '0')
             initComplete: function () {
             var api = this.api();
 
@@ -242,7 +244,6 @@
                                 .setSelectionRange(cursorPosition, cursorPosition);
                         });
                 });
-                @if(auth()->user()->id == '0')
                 api
                 .columns(-1)
                 .eq(0)
@@ -269,8 +270,9 @@
                     $('#table1 tbody :checkbox').prop('checked', $(this).is(':checked'));
                     e.stopImmediatePropagation();
                 });
-                @endif
+
         },
+        @endif
         });
 
         $('body').on('click', '.editKelas', function () {
@@ -299,12 +301,9 @@
 
             $.ajax({
                 data: {
-                    nis: $('#nis').html(),
-                    nilai_akhir: $('#jumlah_akhir').html(),
-                    kelas_tujuan: $('#kelas_tujuan').html(),
-                    kapasitas: $('#kapasitas').html(),
+                    nis: $('#id_siswa').val(),
                 },
-                url: "{{ route('seleksi.store') }}",
+                url: "{{ route('seleksi.tambah') }}",
                 type: "POST",
                 dataType: 'json',
                 success: function (data) {

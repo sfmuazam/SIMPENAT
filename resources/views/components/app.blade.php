@@ -8,13 +8,13 @@
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ $title }}</title>
+    <title>{{ $title }} | SMAN 2 Kota Tegal</title>
 
     <link rel="stylesheet" href="{{ asset('css/main/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/main/app-dark.css') }}">
 
-    <link rel="shortcut icon" href="assets/images/logo/favicon.svg" type="image/x-icon">
-    <link rel="shortcut icon" href="assets/images/logo/favicon.png" type="image/png">
+    {{-- <link rel="shortcut icon" href="assets/images/logo/favicon.svg" type="image/x-icon"> --}}
+    <link rel="shortcut icon" href="{{ asset('images/smada.png') }}" type="image/png">
 
     <link rel="stylesheet" type="text/css"
         href="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.1/af-2.5.1/b-2.3.3/b-html5-2.3.3/r-2.4.0/sl-1.5.0/datatables.min.css" />
@@ -41,14 +41,8 @@
             </header>
             @yield('content')
             <footer>
-                <div class="footer clearfix mb-0 text-muted">
-                    <div class="float-start">
-                        <p>2021 &copy; Mazer</p>
-                    </div>
-                    <div class="float-end">
-                        <p>Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> by <a
-                                href="https://saugi.me">Saugi</a></p>
-                    </div>
+                <div class="footer clearfix mb-0 text-muted text-center">
+                    <p><?= date("Y"); ?> &copy; SMAN 2 Kota Tegal</p>
                 </div>
             </footer>
         </div>

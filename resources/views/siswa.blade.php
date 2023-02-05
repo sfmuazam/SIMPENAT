@@ -147,6 +147,19 @@ aria-hidden="true">
           </tr>
         </tbody>
       </table>
+      <p class="h5 text-center mt-4">Riwayat Seleksi</p>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th class="text-center">No</th>
+            <th class="text-center">Kelas</th>
+            <th class="text-center">Nilai Akhir</th>
+            <th class="text-center">Status</th>
+          </tr>
+        </thead>
+        <tbody id="riwayat">
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
@@ -346,6 +359,212 @@ aria-hidden="true">
         </button>
       </div>
     </form>
+  </div>
+</div>
+</div>
+
+<!-- Edit Data -->
+<div class="modal fade" id="modal-siswa-edit" tabindex="-1" role="dialog" aria-labelledby="tambahDataTitle"
+aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+  <div class="modal-content">
+    <div class="modal-header bg-primary p-4">
+      <h5 class="modal-title white" id="tambahDataTitle">Edit Siswa
+      </h5>
+      <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+        <i data-feather="x"></i>
+      </button>
+    </div>
+      <div class="modal-body py-0">
+        <form class="form mb-0" id="formSiswaEdit" name="formSiswaEdit">
+        <section id="multiple-column-form">
+          <div class="row match-height">
+            <div class="col-12">
+              <div class="card mb-0">
+                <div class="card-content">
+                  <div class="card-body">
+                    <div class="row">
+                      <input type="hidden" name="id_siswa" id="edit_id_siswa">
+                      <div class="col-12 text-center">
+                        <p class="h4">Identitas Siswa</p>
+                      </div>
+                      <div class="col-12">
+                        <div class="form-group">
+                          <label for="asal_kelas" class="form-label">Kelas</label>
+                          <select class="form-select" id="edit_asal_kelas" name="asal_kelas"
+                            data-placeholder="Pilih Kelas" required>
+                            <option value=""></option>
+                            <option value="X-01">X-01</option>
+                            <option value="X-02">X-02</option>
+                            <option value="X-03">X-03</option>
+                            <option value="X-04">X-04</option>
+                            <option value="X-05">X-05</option>
+                            <option value="X-06">X-06</option>
+                            <option value="X-07">X-07</option>
+                            <option value="X-08">X-08</option>
+                            <option value="X-09">X-09</option>
+                            <option value="X-10">X-10</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="form-group">
+                          <label for="nis" class="form-label">NIS</label>
+                          <input type="text" id="edit_nis" class="form-control" name="nis"
+                            placeholder="Masukkan NIS ...." required>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="form-group">
+                          <label for="nisn" class="form-label">NISN</label>
+                          <input type="text" id="edit_nisn" class="form-control" name="nisn"
+                            placeholder="Masukkan NISN ...." required>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="form-group">
+                          <label for="nama" class="form-label">Nama</label>
+                          <input type="text" id="edit_nama" class="form-control" name="nama"
+                            placeholder="Masukkan Nama Siswa ...." required>
+                        </div>
+                      </div>
+                      <div class="col-12 text-center mt-2">
+                        <p class="h4">Nilai Siswa</p>
+                      </div>
+
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th class="text-center">Mata Pelajaran</th>
+                            <th class="text-center">Raport smt 1</th>
+                            <th class="text-center">UTS smt 2</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Agama</td>
+                            <td class="text-center"><input required name="n_agama" id="edit_n_agama" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_agama_uts" id="edit_n_agama_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>PKN</td>
+                            <td class="text-center"><input required name="n_pkn" id="edit_n_pkn" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_pkn_uts" id="edit_n_pkn_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Bahasa Indonesia</td>
+                            <td class="text-center"><input required name="n_bahasa_indonesia" id="edit_n_bahasa_indonesia" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_bahasa_indonesia_uts" id="edit_n_bahasa_indonesia_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Bahasa Inggris</td>
+                            <td class="text-center"><input required name="n_bahasa_inggris" id="edit_n_bahasa_inggris" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_bahasa_inggris_uts" id="edit_n_bahasa_inggris_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Matematika</td>
+                            <td class="text-center"><input required name="n_matematika" id="edit_n_matematika" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_matematika_uts" id="edit_n_matematika_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Fisika</td>
+                            <td class="text-center"><input required name="n_fisika" id="edit_n_fisika" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_fisika_uts" id="edit_n_fisika_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Kimia</td>
+                            <td class="text-center"><input required name="n_kimia" id="edit_n_kimia" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_kimia_uts" id="edit_n_kimia_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Biologi</td>
+                            <td class="text-center"><input required name="n_biologi" id="edit_n_biologi" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_biologi_uts" id="edit_n_biologi_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Ekonomi</td>
+                            <td class="text-center"><input required name="n_ekonomi" id="edit_n_ekonomi" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_ekonomi_uts" id="edit_n_ekonomi_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Geografi</td>
+                            <td class="text-center"><input required name="n_geografi" id="edit_n_geografi" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_geografi_uts" id="edit_n_geografi_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Sosiologi</td>
+                            <td class="text-center"><input required name="n_sosiologi" id="edit_n_sosiologi" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_sosiologi_uts" id="edit_n_sosiologi_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Penjaskes</td>
+                            <td class="text-center"><input required name="n_penjaskes" id="edit_n_penjaskes" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_penjaskes_uts" id="edit_n_penjaskes_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Seni Budaya</td>
+                            <td class="text-center"><input required name="n_seni_budaya" id="edit_n_seni_budaya" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_seni_budaya_uts" id="edit_n_seni_budaya_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Sejarah Indonesia</td>
+                            <td class="text-center"><input required name="n_sejarah_indonesia" id="edit_n_sejarah_indonesia" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_sejarah_indonesia_uts" id="edit_n_sejarah_indonesia_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Informatika</td>
+                            <td class="text-center"><input required name="n_informatika" id="edit_n_informatika" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_informatika_uts" id="edit_n_informatika_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Bahasa Jawa</td>
+                            <td class="text-center"><input required name="n_bahasa_jawa" id="edit_n_bahasa_jawa" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_bahasa_jawa_uts" id="edit_n_bahasa_jawa_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Prakarya</td>
+                            <td class="text-center"><input required name="n_prakarya" id="edit_n_prakarya" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_prakarya_uts" id="edit_n_prakarya_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td>Bimbingan Konseling</td>
+                            <td class="text-center"><input required name="n_bimbingan_konseling" id="edit_n_bimbingan_konseling" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                            <td class="text-center"><input required name="n_bimbingan_konseling_uts" id="edit_n_bimbingan_konseling_uts" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <td><strong>Lainya</strong></td>
+                            <td class="text-center" colspan="2"><input required name="n_lainya" id="edit_n_lainya" value="0" type="number" step="0.01" min="0" max="100" class="form-control"></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="modal-footer">
+        <button type="reset" class="btn btn-light-secondary">
+          <i class="bx bx-x d-block d-sm-none"></i>
+          <span class="d-none d-sm-block">Reset</span>
+        </button>
+
+        <button type="submit" class="btn btn-primary ml-1" id="edit_saveBtn">
+          <i class="bx bx-check d-block d-sm-none"></i>
+          <span class="d-none d-sm-block">Simpan</span>
+        </button>
+      </form>
+      <form  id="formReset" name="formReset">
+        <input type="text" name="auth" id="auth" hidden />
+        <button type="submit" class="btn btn-secondary ml-1" id="resetBtn">
+          <i class="bx bx-check d-block d-sm-none"></i>
+          <span class="d-none d-sm-block">Reset Password</span>
+        </button>
+      </form>
+      </div>
+
   </div>
 </div>
 </div>
@@ -743,8 +962,15 @@ aria-hidden="true">
                 $('#bahasa_jawa_uts').html(data.bahasa_jawa_uts);
                 $('#prakarya_uts').html(data.prakarya_uts);
                 $('#bimbingan_konseling_uts').html(data.bimbingan_konseling_uts);
-                $('#lainya').html(data.riwayat[0]['id']);
-                console.log(data.riwayat);
+                $('#lainya').html(data.lainya);
+                // .html(data.riwayat[0]['id']);
+                var i = 0;
+                let history = '';
+                data.riwayat.forEach(function() {
+                  history += '<tr><td class="text-center">'+(i+1)+'</td><td class="text-center">'+data.riwayat[i]['kelas_tujuan']+'</td><td class="text-center">'+data.riwayat[i]['nilai_akhir']+'</td><td>'+data.riwayat[i]['status']+'</td></tr>';
+                  i++;
+                });
+                $('#riwayat').html(history);
             })
         });
         // initialize btn add
@@ -758,49 +984,50 @@ aria-hidden="true">
         $('body').on('click', '.editKelas', function () {
             var id_kelas = $(this).data('id');
             $.get("{{route('siswa.index')}}" + '/' + id_kelas + '/edit', function (data) {
-                $('#modal-siswa').modal('show');
-                $('#id_siswa').val(data.id);
-                $('#nis').val(data.nis);
-                $('#nisn').val(data.nisn);
-                $('#nama').val(data.nama);
-                $('#asal_kelas').val(data.kelas).change();
-                $('#n_agama').val(data.agama);
-                $('#n_pkn').val(data.pkn);
-                $('#n_bahasa_indonesia').val(data.bahasa_indonesia);
-                $('#n_bahasa_inggris').val(data.bahasa_inggris);
-                $('#n_matematika').val(data.matematika);
-                $('#n_fisika').val(data.fisika);
-                $('#n_kimia').val(data.kimia);
-                $('#n_biologi').val(data.biologi);
-                $('#n_ekonomi').val(data.ekonomi);
-                $('#n_geografi').val(data.geografi);
-                $('#n_sosiologi').val(data.sosiologi);
-                $('#n_penjaskes').val(data.penjaskes);
-                $('#n_seni_budaya').val(data.seni_budaya);
-                $('#n_sejarah_indonesia').val(data.sejarah_indonesia);
-                $('#n_informatika').val(data.informatika);
-                $('#n_bahasa_jawa').val(data.bahasa_jawa);
-                $('#n_prakarya').val(data.prakarya);
-                $('#n_bimbingan_konseling').val(data.bimbingan_konseling);
-                $('#n_agama_uts').val(data.agama_uts);
-                $('#n_pkn_uts').val(data.pkn_uts);
-                $('#n_bahasa_indonesia_uts').val(data.bahasa_indonesia_uts);
-                $('#n_bahasa_inggris_uts').val(data.bahasa_inggris_uts);
-                $('#n_matematika_uts').val(data.matematika_uts);
-                $('#n_fisika_uts').val(data.fisika_uts);
-                $('#n_kimia_uts').val(data.kimia_uts);
-                $('#n_biologi_uts').val(data.biologi_uts);
-                $('#n_ekonomi_uts').val(data.ekonomi_uts);
-                $('#n_geografi_uts').val(data.geografi_uts);
-                $('#n_sosiologi_uts').val(data.sosiologi_uts);
-                $('#n_penjaskes_uts').val(data.penjaskes_uts);
-                $('#n_seni_budaya_uts').val(data.seni_budaya_uts);
-                $('#n_sejarah_indonesia_uts').val(data.sejarah_indonesia_uts);
-                $('#n_informatika_uts').val(data.informatika_uts);
-                $('#n_bahasa_jawa_uts').val(data.bahasa_jawa_uts);
-                $('#n_prakarya_uts').val(data.prakarya_uts);
-                $('#n_bimbingan_konseling_uts').val(data.bimbingan_konseling_uts);
-                $('#n_lainya').val(data.lainya);
+                $('#modal-siswa-edit').modal('show');
+                $('#edit_id_siswa').val(data.id);
+                $('#edit_nis').val(data.nis);
+                $('#edit_nisn').val(data.nisn);
+                $('#edit_nama').val(data.nama);
+                $('#edit_asal_kelas').val(data.kelas).change();
+                $('#edit_n_agama').val(data.agama);
+                $('#edit_n_pkn').val(data.pkn);
+                $('#edit_n_bahasa_indonesia').val(data.bahasa_indonesia);
+                $('#edit_n_bahasa_inggris').val(data.bahasa_inggris);
+                $('#edit_n_matematika').val(data.matematika);
+                $('#edit_n_fisika').val(data.fisika);
+                $('#edit_n_kimia').val(data.kimia);
+                $('#edit_n_biologi').val(data.biologi);
+                $('#edit_n_ekonomi').val(data.ekonomi);
+                $('#edit_n_geografi').val(data.geografi);
+                $('#edit_n_sosiologi').val(data.sosiologi);
+                $('#edit_n_penjaskes').val(data.penjaskes);
+                $('#edit_n_seni_budaya').val(data.seni_budaya);
+                $('#edit_n_sejarah_indonesia').val(data.sejarah_indonesia);
+                $('#edit_n_informatika').val(data.informatika);
+                $('#edit_n_bahasa_jawa').val(data.bahasa_jawa);
+                $('#edit_n_prakarya').val(data.prakarya);
+                $('#edit_n_bimbingan_konseling').val(data.bimbingan_konseling);
+                $('#edit_n_agama_uts').val(data.agama_uts);
+                $('#edit_n_pkn_uts').val(data.pkn_uts);
+                $('#edit_n_bahasa_indonesia_uts').val(data.bahasa_indonesia_uts);
+                $('#edit_n_bahasa_inggris_uts').val(data.bahasa_inggris_uts);
+                $('#edit_n_matematika_uts').val(data.matematika_uts);
+                $('#edit_n_fisika_uts').val(data.fisika_uts);
+                $('#edit_n_kimia_uts').val(data.kimia_uts);
+                $('#edit_n_biologi_uts').val(data.biologi_uts);
+                $('#edit_n_ekonomi_uts').val(data.ekonomi_uts);
+                $('#edit_n_geografi_uts').val(data.geografi_uts);
+                $('#edit_n_sosiologi_uts').val(data.sosiologi_uts);
+                $('#edit_n_penjaskes_uts').val(data.penjaskes_uts);
+                $('#edit_n_seni_budaya_uts').val(data.seni_budaya_uts);
+                $('#edit_n_sejarah_indonesia_uts').val(data.sejarah_indonesia_uts);
+                $('#edit_n_informatika_uts').val(data.informatika_uts);
+                $('#edit_n_bahasa_jawa_uts').val(data.bahasa_jawa_uts);
+                $('#edit_n_prakarya_uts').val(data.prakarya_uts);
+                $('#edit_n_bimbingan_konseling_uts').val(data.bimbingan_konseling_uts);
+                $('#edit_n_lainya').val(data.lainya);
+                $('#auth').val(data.nis);
             })
         });
         // initialize btn save
@@ -827,6 +1054,57 @@ aria-hidden="true">
             });
 
         });
+
+        // initialize btn update
+        $('#edit_saveBtn').click(function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                data: $('#formSiswaEdit').serialize(),
+                url: "{{ route('siswa.store') }}",
+                type: "POST",
+                dataType: 'json',
+                success: function (data) {
+
+                    $('#formSiswaEdit').trigger("reset");
+                    $('#modal-siswa-edit').modal('hide');
+                    swal_success();
+                    table.draw();
+
+                },
+                error: function (data) {
+                    console.log(data);
+                    swal_error();
+                }
+            });
+
+        });
+
+        // initialize btn reset
+        $('#resetBtn').click(function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                data: $('#formReset').serialize(),
+                url: "{{ route('siswa.reset') }}",
+                type: "POST",
+                dataType: 'json',
+                success: function (data) {
+
+                    $('#formSiswaEdit').trigger("reset");
+                    $('#modal-siswa-edit').modal('hide');
+                    swal_success();
+                    table.draw();
+
+                },
+                error: function (data) {
+                    console.log(data);
+                    swal_error();
+                }
+            });
+
+        });
+
         // initialize btn delete
         $('body').on('click', '.deleteKelas', function () {
             var id_kelas = $(this).data("id");

@@ -5,38 +5,31 @@
     <div class="page-title">
         <div class="row">
             <div class="col-12 col-md-12 order-md-1 order-last">
-                <h3>Seleksi</h3>
-                @if(auth()->user()->id > '0')
-                @if($status == null)
-                <div class="alert alert-danger alert-dismissible show fade">
-                    Anda belum terdaftar di kelas manapun. Silahkan memilih kelas yang diminati!
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                @endif
-                @if($status)
-                <div class="alert alert-success alert-dismissible show fade">
-                    Anda telah terdaftar di kelas {{ $status }}. Silahkan terus pantau peringkat Anda!
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                @endif
-                @endif
+                <h3>Riwayat</h3>
             </div>
         </div>
     </div>
 
     <section class="section">
         <div class="card">
+            {{-- <div class="card-header">
+                <div class="justify-content-between d-flex">
+                    <div class="form-group">
+                    </div>
+                    <div class="tambah">
+                    </div>
+                </div>
+            </div> --}}
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table" id="table1">
                         <thead>
                             <tr>
-                                <th>Kelas</th>
-                                <th>Mapel Peminatan</th>
-                                <th>Mapel Penilaian</th>
-                                <th>Nilai</th>
-                                <th>Kapasitas</th>
-                                <th>Aksi</th>
+                                <th>NIS</th>
+                                <th>Nama</th>
+                                <th>Kelas Tujuan</th>
+                                <th>Nilai Akhir</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
 
@@ -70,6 +63,8 @@
                                                     <span id="nilai_pilihan"></span>
                                             </div>
                                         </div>
+
+
                                         <div class="col-6">
                                             <div class="form-group">
                                         <span class="">Lainnya<br></span>
@@ -157,14 +152,13 @@
             serverSide: true,
             responsive: true,
             order: [[ 0, 'asc' ]],
-            ajax: "{{ route('seleksi.index') }}",
+            ajax: "{{ route('riwayat.index') }}",
             columns: [
-                {data: 'nama_kelas', name: 'nama_kelas', width: "7%"},
-                {data: 'mapel_peminatan', name: 'mapel_peminatan'},
-                {data: 'mapel_penilaian', name: 'mapel_penilaian'},
-                {data: 'nilai', name: 'nilai'},
-                {data: 'kapasitas', name: 'kapasitas', width: "10%"},
-                {data: 'aksi', name: 'aksi', width: "10%", searchable: false,},
+                {data: 'nis', name: 'nis', width: "7%"},
+                {data: 'nama', name: 'nama'},
+                {data: 'kelas_tujuan', name: 'kelas_tujuan'},
+                {data: 'nilai_akhir', name: 'nilai_akhir'},
+                {data: 'status', name: 'status'},
             ],
         });
 
@@ -179,7 +173,7 @@
         // initialize btn edit
         $('body').on('click', '.editKelas', function () {
             var id_kelas = $(this).data('id');
-            $.get("{{route('seleksi.index')}}" + '/' + id_kelas + '/edit', function (data) {
+            $.get("{{route('riwayat.index')}}" + '/' + id_kelas + '/edit', function (data) {
                 $('#modal-kelas').modal('show');
                 $('#kelas_tujuan').html(data.nama_kelas);
 
@@ -215,7 +209,7 @@
                     kelas_tujuan: $('#kelas_tujuan').html(),
                     kapasitas: $('#kapasitas').html(),
                 },
-                url: "{{ route('seleksi.store') }}",
+                url: "{{ route('riwayat.store') }}",
                 type: "POST",
                 dataType: 'json',
                 success: function (data) {
@@ -248,7 +242,7 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         type: "DELETE",
-                        url: "{{ route('seleksi.store') }}" + '/' + id_kelas,
+                        url: "{{ route('riwayat.store') }}" + '/' + id_kelas,
                         success: function (data) {
                             swal_success();
                             table.draw();

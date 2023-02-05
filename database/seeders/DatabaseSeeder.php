@@ -48,15 +48,15 @@ class DatabaseSeeder extends Seeder
 
         $data_kelas = [
             ['nama_kelas' => 'XI-01','mapel_peminatan' => 'Biologi,Fisika,Bahasa Jepang,Kimia','mapel_penilaian' => 'biologi,fisika,kimia','kapasitas' => '36'],
-            ['nama_kelas' => 'XI-02','mapel_peminatan' => 'Fisika,Biologi,Bahasa Inggris Lanjut,Kimia','mapel_penilaian' => '','kapasitas' => '36'],
-            ['nama_kelas' => 'XI-03','mapel_peminatan' => 'Fisika,Informatika,Matematika Lanjut,Bahasa Jepang','mapel_penilaian' => '','kapasitas' => '36'],
-            ['nama_kelas' => 'XI-04','mapel_peminatan' => 'Kimia,Biologi,Sosiologi,Bahasa Inggris Lanjut','mapel_penilaian' => '','kapasitas' => '36'],
-            ['nama_kelas' => 'XI-05','mapel_peminatan' => 'Informatika,Matematika Lanjut,Biologi,Ekonomi','mapel_penilaian' => '','kapasitas' => '36'],
-            ['nama_kelas' => 'XI-06','mapel_peminatan' => 'Geografi,Sosiologi,Biologi,Bahasa Inggris Lanjut','mapel_penilaian' => '','kapasitas' => '36'],
-            ['nama_kelas' => 'XI-07','mapel_peminatan' => 'Ekonomi,Informatika,Matematika Lanjut, Bahasa Inggris Lanjut','mapel_penilaian' => '','kapasitas' => '36'],
-            ['nama_kelas' => 'XI-08','mapel_peminatan' => 'Ekonomi,Geografi,Sosiologi,Bahasa Jepang','mapel_penilaian' => '','kapasitas' => '36'],
-            ['nama_kelas' => 'XI-09','mapel_peminatan' => 'Ekonomi,Geografi,Sosiologi,Informatika','mapel_penilaian' => '','kapasitas' => '36'],
-            ['nama_kelas' => 'XI-10','mapel_peminatan' => 'Ekonomi,Sosiologi,Informatika,Bahasa Inggris Lanjut','mapel_penilaian' => '','kapasitas' => '36'],
+            ['nama_kelas' => 'XI-02','mapel_peminatan' => 'Fisika,Biologi,Bahasa Inggris Lanjut,Kimia','mapel_penilaian' => 'fisika,biologi,bahasa_inggris,kimia','kapasitas' => '36'],
+            ['nama_kelas' => 'XI-03','mapel_peminatan' => 'Fisika,Informatika,Matematika Lanjut,Bahasa Jepang','mapel_penilaian' => 'fisika,informatika,matematika','kapasitas' => '36'],
+            ['nama_kelas' => 'XI-04','mapel_peminatan' => 'Kimia,Biologi,Sosiologi,Bahasa Inggris Lanjut','mapel_penilaian' => 'kimia,biologi,sosiologi,bahasa_inggris','kapasitas' => '36'],
+            ['nama_kelas' => 'XI-05','mapel_peminatan' => 'Informatika,Matematika Lanjut,Biologi,Ekonomi','mapel_penilaian' => 'informatika,matematika,biologi,ekonomi','kapasitas' => '36'],
+            ['nama_kelas' => 'XI-06','mapel_peminatan' => 'Geografi,Sosiologi,Biologi,Bahasa Inggris Lanjut','mapel_penilaian' => 'geografi,sosiologi,biologi,bahasa_inggris','kapasitas' => '36'],
+            ['nama_kelas' => 'XI-07','mapel_peminatan' => 'Ekonomi,Informatika,Matematika Lanjut, Bahasa Inggris Lanjut','mapel_penilaian' => 'ekonomi,informatika,matematika,bahasa_inggris','kapasitas' => '36'],
+            ['nama_kelas' => 'XI-08','mapel_peminatan' => 'Ekonomi,Geografi,Sosiologi,Bahasa Jepang','mapel_penilaian' => 'ekonomi,geografi,sosiologi','kapasitas' => '36'],
+            ['nama_kelas' => 'XI-09','mapel_peminatan' => 'Ekonomi,Geografi,Sosiologi,Informatika','mapel_penilaian' => 'ekonomi,geografi,sosiologi,informatika','kapasitas' => '36'],
+            ['nama_kelas' => 'XI-10','mapel_peminatan' => 'Ekonomi,Sosiologi,Informatika,Bahasa Inggris Lanjut','mapel_penilaian' => 'ekonomi,sosiologi,informatika,bahasa_inggris','kapasitas' => '36'],
         ];
 
         $kelas = Kelas::insert($data_kelas);

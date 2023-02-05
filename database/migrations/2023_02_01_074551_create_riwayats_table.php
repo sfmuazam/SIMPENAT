@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('riwayats', function (Blueprint $table) {
             $table->id();
             $table->string('nis', 8);
-            $table->string('kelas_tujuan', 6);
+            $table->string('kelas_tujuan', 6)->nullable();
             $table->float('nilai_akhir');
-            $table->string('status', 20)->default('Diproses');
+            $table->string('status', 20)->default('Proses Seleksi');
             $table->timestamps();
         });
     }

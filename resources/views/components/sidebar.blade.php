@@ -3,7 +3,7 @@
         <div class="sidebar-header position-relative">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="logo pt-2">
-                    <h2>Nabung</h2>
+                    <h2>Minat</h2>
                 </div>
                 <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -74,7 +74,7 @@
 
                 <li class="{{ (auth()->user()->id > 0) ? 'd-none' : '' }} sidebar-item {{ ($title === "Mata Pelajaran") ? 'active' : '' }}">
                     <a href="{{ route('mapel.index') }}" class='sidebar-link'>
-                        <i class="bi bi-people-fill"></i>
+                        <i class="bi bi-bookmarks-fill"></i>
                         <span>Mapel Peminatan</span>
                     </a>
                 </li>
@@ -95,26 +95,50 @@
 
                 <li class="sidebar-item {{ ($title === "Seleksi") ? 'active' : '' }}">
                     <a href="{{ route('seleksi.index') }}" class='sidebar-link'>
-                        <i class="bi bi-people-fill"></i>
+                        <i class="bi bi-grid-1x2-fill"></i>
                         <span>Seleksi</span>
                     </a>
                 </li>
 
-                <li class="sidebar-item {{ ($title === "Riwayat") ? 'active' : '' }}">
+                <li class="{{ (auth()->user()->id > 0) ? 'd-none' : '' }} sidebar-item {{ ($title === "Riwayat") ? 'active' : '' }}">
                     <a href="{{ route('riwayat.index') }}" class='sidebar-link'>
-                        <i class="bi bi-people-fill"></i>
+                        <i class="bi bi-layout-text-sidebar-reverse"></i>
                         <span>Riwayat</span>
                     </a>
                 </li>
 
+                {{-- <li class="sidebar-item {{ ($title === "Tabungan") ? 'active' : '' }}">
+                    <a href="/tabungan" class='sidebar-link'>
+                        <i class="bi bi-cash-coin"></i>
+                        <span>Tabungan</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item {{ ($title === "Kelas 10" || $title === "Kelas 11" || $title === "Kelas 12" ||  $title==="Total Per Siswa" ) ? 'active' : '' }} has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-stack"></i>
+                        <span>Rekap</span>
+                    </a>
+                    <ul class="submenu {{ ($title === "Kelas 10" || $title === "Kelas 11" || $title === "Kelas 12" || $title==="Total Per Siswa" ) ? 'active' : '' }}">
+                        <li class="submenu-item {{ ($title === "Kelas 10") ? 'active' : '' }}">
+                            <a href="/kelas10">Kelas 10</a>
+                        </li>
+                        <li class="submenu-item {{ ($title === "Kelas 11") ? 'active' : '' }}">
+                            <a href="/kelas11">Kelas 11</a>
+                        </li>
+                        <li class="submenu-item {{ ($title === "Kelas 12") ? 'active' : '' }}">
+                            <a href="/kelas12">Kelas 12</a>
+                        </li>
+                        <li class="submenu-item {{ ($title === "Total Per Siswa") ? 'active' : '' }}">
+                            <a href="/totalpersiswa">Total Per Siswa</a>
+                        </li>
+                    </ul>
+                </li> --}}
                 <li class="sidebar-item {{ ($title === "Logout") ? 'active' : '' }}">
-                    <form action="{{ route('logout') }}" method="post">
-                        @csrf
-                        <button class='sidebar-link'>
-                            <i class="bi bi-box-arrow-left"></i>
-                            <span>Logout</span>
-                        </button>
-                    </form>
+                    <a href="{{ route('logout') }}" class='sidebar-link'>
+                        <i class="bi bi-box-arrow-left"></i>
+                        <span>Logout</span>
+                    </a>
                 </li>
             </ul>
         </div>

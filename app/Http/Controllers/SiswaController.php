@@ -181,6 +181,16 @@ class SiswaController extends Controller
         //
     }
 
+    public function reset(Request $request)
+    {
+        $siswa = User::where('id', $request->auth)->first();
+        $update = [
+            'password' => bcrypt($siswa->id)
+        ];
+        User::where('id', $request->auth)->update($update);
+        return response()->json(['success' => 'Kata sandi berhasil direset']);
+    }
+
     public function destroy($id)
     {
         $nis = Siswa::where('id', $id)->first()->nis;

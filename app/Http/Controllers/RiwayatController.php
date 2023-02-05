@@ -20,7 +20,7 @@ class RiwayatController extends Controller
                 return $nama_siswa;
             })->rawColumns(['nama'])->make(true);
         }
-        return view('seleksi', [
+        return view('riwayat', [
             'title' => 'Riwayat',
         ]);
     }

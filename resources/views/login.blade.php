@@ -4,16 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Masuk - SMA 2 Tegal</title>
+    <title>Masuk | SMAN 2 Kota Tegal</title>
     <link rel="stylesheet" href="{{ asset('css/main/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/pages/auth.css') }}">
-    <link rel="shortcut icon" href="{{ asset('images/logo/favicon.svg') }}" type="image/x-icon">
-    <link rel="shortcut icon" href="{{ asset('images/logo/favicon.png') }}" type="image/png">
+    {{-- <link rel="shortcut icon" href="{{ asset('images/logo/favicon.svg') }}" type="image/x-icon"> --}}
+    <link rel="shortcut icon" href="{{ asset('images/smada.png') }}" type="image/png">
 </head>
 
 <body>
     <div id="auth">
-
         <div class="row h-100">
             <div class="col-lg-5 col-12">
                 <div id="auth-left">
@@ -39,7 +38,7 @@
                                 <i class="bi bi-shield-lock"></i>
                             </div>
                         </div>
-                        <label for="">username: admin, password: admin</label>
+                        {{-- <label for="">username: admin, password: admin</label> --}}
                         {{-- <div class="form-check form-check-lg d-flex align-items-end">
                             <input class="form-check-input me-2" type="checkbox" value="" id="flexCheckDefault">
                             <label class="form-check-label text-gray-600" for="flexCheckDefault">
@@ -56,8 +55,11 @@
                     </div> --}}
                 </div>
             </div>
-            <div class="col-lg-7 d-none d-lg-block">
-                <div id="auth-right">
+            <div class="col-lg-7 d-lg-block d-none">
+                <?php use App\Models\User;
+                     $cover =  User::where('id', 'admin')->first()->cover;
+                ?>
+                <div id="auth-right" style="background-image: url({{ asset('images/'.$cover) }}); background-size: cover;">
 
                 </div>
             </div>
