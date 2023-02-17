@@ -1,9 +1,15 @@
+<?php
+    use App\Models\User;
+    $sekolah = User::where('id', 'admin')->first();
+?>
+
 <div id="sidebar" class="active">
     <div class="sidebar-wrapper active">
         <div class="sidebar-header position-relative">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="logo pt-2">
-                    <h2>Minat</h2>
+                    <img src="{{ asset('images/'.$sekolah['logo']) }}" width="20px" height="20px" alt="">
+                    <h5 class="d-inline">SIMPENAT</h5>
                 </div>
                 <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -41,6 +47,17 @@
         </div>
         <div class="sidebar-menu">
             <ul class="menu">
+                <li class="sidebar-item text-center {{ (auth()->user()->id == 0) ? 'd-none' : '' }}">
+                    <div class="avatar">
+                        <div class="mb-3 rounded-circle align-center" style="
+                            background-image:url({{ asset('images/avatar.png') }});
+                            background-size:cover;
+                            height:50px;
+                            width:50px"></div>
+                    </div>
+                    <span class="d-block">{{ auth()->user()->name }}</span>
+                </li>
+
                 <li class="sidebar-title">Profil</li>
 
                 <li class="sidebar-item {{ ($title === "Profil") ? 'active' : '' }}">

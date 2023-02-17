@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<?php
+    use App\Models\User;
+    $sekolah = User::where('id', 'admin')->first();
+?>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,18 +13,20 @@
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ $title }} | SMAN 2 Kota Tegal</title>
+    <title>{{ $title }} | {{ $sekolah['name'] }}</title>
 
     <link rel="stylesheet" href="{{ asset('css/main/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/main/app-dark.css') }}">
 
     {{-- <link rel="shortcut icon" href="assets/images/logo/favicon.svg" type="image/x-icon"> --}}
-    <link rel="shortcut icon" href="{{ asset('images/smada.png') }}" type="image/png">
+    <link rel="shortcut icon" href="{{ asset('images/'.$sekolah['logo']) }}" type="image/png">
 
     <link rel="stylesheet" type="text/css"
         href="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.1/af-2.5.1/b-2.3.3/b-html5-2.3.3/r-2.4.0/sl-1.5.0/datatables.min.css" />
 
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+
+    <script src="{{ asset('extensions/sweetalert2/sweetalert2.min.js') }}"></script>
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -42,7 +49,7 @@
             @yield('content')
             <footer>
                 <div class="footer clearfix mb-0 text-muted text-center">
-                    <p><?= date("Y"); ?> &copy; SMAN 2 Kota Tegal</p>
+                    <p><?= date("Y"); ?> &copy; {{ $sekolah['name'] }}</p>
                 </div>
             </footer>
         </div>

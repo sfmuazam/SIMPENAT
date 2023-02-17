@@ -7,15 +7,22 @@
             <div class="col-12 col-md-12 order-md-1 order-last">
                 <h3>Seleksi</h3>
                 @if(auth()->user()->id > '0')
-                @if($status == null)
+                @if($kelas_terdaftar == null)
                 <div class="alert alert-danger alert-dismissible show fade">
                     Anda belum terdaftar di kelas manapun. Silahkan memilih kelas yang diminati!
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 @endif
-                @if($status)
+                @if($status == "Diterima")
                 <div class="alert alert-success alert-dismissible show fade">
-                    Anda telah terdaftar di kelas {{ $status }}. Silahkan terus pantau peringkat Anda!
+                    Proses seleksi telah selesai. Selamat kelas Anda adalah kelas {{ $kelas_terdaftar }}. Semangat
+                    belajar dan terus berprestasi!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                @endif
+                @if($kelas_terdaftar != null && $status != "Diterima")
+                <div class="alert alert-warning alert-dismissible show fade">
+                    Anda telah terdaftar di kelas {{ $kelas_terdaftar }}. Silahkan terus pantau peringkat Anda!
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 @endif
@@ -39,74 +46,6 @@
                                 <th>Aksi</th>
                             </tr>
                         </thead>
-
-                        <div class="modal fade" id="modal-kelas" tabindex="-1" role="dialog"
-                            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header bg-primary p-4">
-                                        <h5 class="modal-title white" id="exampleMo dalLongTitle">Scrolling Modal</h5>
-                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                            <i data-feather="x"></i>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-
-                                        <div class="row">
-                                        <span class="text-muted font-extrabold">NIS : <font id="nis">{{ auth()->user()->id }}</font></span>
-                                        <span class="text-muted font-extrabold">Nama : {{ auth()->user()->name }}</span>
-                                        <span class="text-muted font-extrabold">Kelas Tujuan : <font id="kelas_tujuan"></font></span>
-                                        <span class="text-muted font-extrabold">Kapasitas : <font id="kapasitas"></font></span>
-
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                        <span class="text-muted font-extrabold">Mapel<br></span>
-                                                <span id="mapel_pilihan"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <span class="text-muted font-extrabold">Nilai<br></span>
-                                                    <span id="nilai_pilihan"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                        <span class="">Lainnya<br></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <span class="" id="lainya">Nilai<br></span>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                        <span class="text-muted font-extrabold">Jumlah<br></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <span class="text-muted font-extrabold" id="jumlah_akhir">Nilai<br></span>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                                            <i class="bx bx-x d-block d-sm-none"></i>
-                                            <span class="d-none d-sm-block">Batal</span>
-                                        </button>
-
-                                        <button id="saveBtn" type="button" class="btn btn-primary ml-1" data-bs-dismiss="modal">
-                                            <i class="bx bx-check d-block d-sm-none"></i>
-                                            <span class="d-none d-sm-block">Simpan</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </table>
                 </div>
             </div>
@@ -114,11 +53,66 @@
 
     </section>
 </div>
-@endsection
+<div class="modal fade" id="modal-kelas" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary p-4">
+                <h5 class="modal-title white" id="exampleMo dalLongTitle">Scrolling Modal</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
 
-@section('script')
-<script>
-    $('document').ready(function () {
+                <div class="row">
+                    <span class="text-muted font-extrabold">NIS : <font id="nis">{{ auth()->user()->id }}</font></span>
+                    <span class="text-muted font-extrabold">Nama : {{ auth()->user()->name }}</span>
+                    <span class="text-muted font-extrabold">Kelas Tujuan : <font id="kelas_tujuan"></font></span>
+                    <span class="text-muted font-extrabold">Kapasitas : <font id="kapasitas"></font></span>
+                    <br>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Mapel</th>
+                                <th class="text-center">Nilai</th>
+                            </tr>
+                        </thead>
+                        <tbody id="nilai">
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td class="text-center">Lainnya</td>
+                                <td class="text-center" id="lainya"></td>
+                            </tr>
+                            <tr>
+                                <th class="text-center">Nilai Akhir</th>
+                                <th class="text-center" id="nilai_akhir"></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Batal</span>
+                    </button>
+
+                    <button id="saveBtn" type="button" class="btn btn-primary ml-1" data-bs-dismiss="modal">
+                        <i class="bx bx-check d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Simpan</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    @endsection
+
+    @section('script')
+    <script>
+        $('document').ready(function () {
 
         $('.form-select').select2({
             theme: "bootstrap-5",
@@ -130,32 +124,35 @@
         });
 
     var table = $('#table1').DataTable({
-            dom: 'lBfrtip',
+            dom: 'Bfrtip',
             orderCellsTop: true,
             buttons: [{
                 extend: 'csv',
                 title: '',
                 exportOptions: {
-                    columns: [0]
+                    columns: [1,2,3,4,5]
                 }
             },
             {
                 extend: 'excel',
                 title: '',
                 exportOptions: {
-                    columns: [0]
+                    columns: [1,2,3,4,5]
                 }
             },
             {
                 extend: 'pdf',
                 title: '',
                 exportOptions: {
-                    columns: [0]
+                    columns: [1,2,3,4,5]
                 }
             }],
+            lengthMenu: [
+                [-1],
+                ["All"]
+            ],
             processing: true,
             serverSide: true,
-            responsive: true,
             order: [[ 0, 'asc' ]],
             ajax: "{{ route('seleksi.index') }}",
             columns: [
@@ -187,21 +184,22 @@
                 mpl = mpl.split(',');
                 let mapel = '';
 
-                mpl.forEach((item,index) => {
-                    mapel += titleCase(item.replace('_',' '))+'<br>'
-                })
-                $('#mapel_pilihan').html(mapel);
-
                 var nl = data.nilai;
-                let nilai ='';
+                let nilai = [];
 
                 nl.forEach((item,index) => {
-                    nilai += item+'<br>'
+                    nilai.push(item);
                 })
-                $('#nilai_pilihan').html(nilai);
+
+                let i = 0;
+                mpl.forEach((item,index) => {
+                    mapel += '<tr><td class="text-center">'+titleCase(item.replace('_',' '))+'</td><td class="text-center">'+nilai[i]+'</td>';
+                        i++;
+                })
+                $('#nilai').html(mapel);
                 $('#lainya').html(data.lainya);
                 $('#kapasitas').html(data.kapasitas);
-                $('#jumlah_akhir').html(data.jumlah_akhir);
+                $('#nilai_akhir').html(data.jumlah_akhir);
             })
         });
         // initialize btn save
@@ -211,7 +209,7 @@
             $.ajax({
                 data: {
                     nis: $('#nis').html(),
-                    nilai_akhir: $('#jumlah_akhir').html(),
+                    nilai_akhir: $('#nilai_akhir').html(),
                     kelas_tujuan: $('#kelas_tujuan').html(),
                     kapasitas: $('#kapasitas').html(),
                 },
@@ -261,5 +259,5 @@
             })
         });
 });
-</script>
-@endsection
+    </script>
+    @endsection

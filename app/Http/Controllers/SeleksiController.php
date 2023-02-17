@@ -73,10 +73,19 @@ class SeleksiController extends Controller
                 return $button;
             })->rawColumns(['mapel_peminatan', 'nilai', 'mapel_penilaian', 'aksi'])->make(true);
         }
+        if(auth()->user()->id == 0)
+        $sts = 0;
+        else{
+            if(Siswa::where('nis',auth()->user()->id)->get()->value('kelas_tujuan'))
+        $sts = Riwayat::where('nis', auth()->user()->id)->orderBy('created_at','desc')->get()->last()->status;
+        else
+        $sts = 0;
+        }
         return view('seleksi', [
             'title' => 'Seleksi',
             'daftar_mapel' => Mapel::orderBy('nama_mapel')->get(),
-            'status' => Siswa::where('nis', auth()->user()->id)->value('kelas_tujuan')
+            'kelas_terdaftar' => Siswa::where('nis', auth()->user()->id)->value('kelas_tujuan'),
+            'status' => $sts,
         ]);
     }
 
@@ -85,9 +94,9 @@ class SeleksiController extends Controller
         if (request()->ajax()) {
             $siswa = Siswa::select(['nis', 'nisn', 'nama', 'siswa.kelas', 'nilai_akhir', 'kelas_tujuan'])->where('kelas_tujuan', $nama_kelas);
 
-            return DataTables::of($siswa)
+            return DataTables::of($siswa)->addIndexColumn()
                 ->addColumn('checkbox', function ($data) {
-                    return '<input type="checkbox" class="sub_chk" data-id="' . $data->id . '">';
+                    return '<input type="checkbox" class="sub_chk" data-id="' . $data->nis . '">';
                 })->addColumn('aksi', function ($data) {
                     $button = ' <div data-toggle="tooltip" data-id="' . $data->nis . '" data-original-title="Delete" class="btn btn-sm btn-icon btn-danger btn-circle mr-2 deleteKelas"><i
               class="bi bi-trash-fill"></i></div>';
@@ -136,15 +145,20 @@ class SeleksiController extends Controller
 
     public function tambah(Request $request)
     {
-        $segments = request()->segments();
-        $last  = end($segments);
         $nilai_seleksi = Siswa::where('nis', $request->nis)->first();
-        $mapel_dinilai = explode(",", Kelas::where('nama_kelas', $last)->value('mapel_penilaian'));
+        $mapel_dinilai = explode(",", Kelas::where('nama_kelas', $request->kelas_tujuan)->value('mapel_penilaian'));
         sort($mapel_dinilai);
         $nilai = 0;
         foreach ($mapel_dinilai as $row) {
             $nilai += $nilai_seleksi->$row;
         }
+        $i = 0;
+        foreach ($mapel_dinilai as $row) {
+            $mapel_uts = $row . '_uts';
+            $nilai += $nilai_seleksi->$mapel_uts;
+            $i++;
+        }
+        $nilai += $nilai_seleksi->lainya;
         Siswa::where('nis', $request->nis)->update(
             [
                 'kelas_tujuan' => $request->kelas_tujuan,
@@ -152,25 +166,26 @@ class SeleksiController extends Controller
             ]
         );
         Riwayat::create([
-            'nis' => auth()->user()->id,
+            'nis' => $request->nis,
             'kelas_tujuan' => $request->kelas_tujuan,
-            'nilai_akhir' => $request->nilai_akhir,
+            'nilai_akhir' => $nilai,
         ]);
         $passing_grade = Siswa::where('kelas_tujuan', $request->kelas_tujuan)->orderBy('nilai_akhir', 'desc')->get();
-
-        if ($passing_grade->count() > $request->kapasitas) {
-            Siswa::where('nis', $passing_grade[$request->kapasitas]->nis)->update(
+        $kapasitas= Kelas::where('nama_kelas', $request->kelas_tujuan)->value('kapasitas');
+        if ($passing_grade->count() > $kapasitas) {
+            Siswa::where('nis', $passing_grade[$kapasitas]->nis)->update(
                 [
                     'kelas_tujuan' => null,
                     'nilai_akhir' => '0',
                 ]
             );
-            Riwayat::where('nis', $passing_grade[$request->kapasitas]->nis)->update(
+            Riwayat::where('nis', $passing_grade[$kapasitas]->nis)->update(
                 [
                     'status' => 'Ditolak'
                 ]
             );
         }
+
 
         return response()->json(['success' => 'Data Berhasil Ditambahkan!']);
     }
@@ -245,7 +260,17 @@ class SeleksiController extends Controller
     public function deleteAll(Request $request)
     {
         $ids = $request->ids;
-        Kelas::whereIn('id', explode(",", $ids))->delete();
+        Siswa::whereIn('nis', explode(",", $ids))->update(
+            [
+                'kelas_tujuan' => null,
+                'nilai_akhir' => 0,
+            ]
+        );
+        Riwayat::whereIn('nis', explode(",", $ids))->update(
+            [
+                'status' => 'Ditolak'
+            ]
+        );
         return response()->json(['success' => "Products Deleted successfully."]);
     }
 }

@@ -585,13 +585,13 @@ aria-hidden="true">
           <div class="form-group">
           </div>
           <div class="tambah">
-            <button type="button" id="importNilai" class="btn btn-primary block" data-bs-toggle="modal"
-              data-bs-target="#modal-import-nilai">
-              Import Nilai
-            </button>
             <button type="button" id="importKelas" class="btn btn-primary block" data-bs-toggle="modal"
               data-bs-target="#modal-import">
               Import Siswa
+            </button>
+            <button type="button" id="importNilai" class="btn btn-primary block" data-bs-toggle="modal"
+              data-bs-target="#modal-import-nilai">
+              Import Nilai
             </button>
             <button type="button" id="createNewSiswa" class="btn btn-primary block" data-bs-toggle="modal"
               data-bs-target="#modal-siswa">
@@ -807,21 +807,21 @@ aria-hidden="true">
                 extend: 'csv',
                 title: '',
                 exportOptions: {
-                    columns: [0]
+                    columns: [1,2,3,4]
                 }
             },
             {
                 extend: 'excel',
                 title: '',
                 exportOptions: {
-                    columns: [0]
+                    columns: [1,2,3,4]
                 }
             },
             {
                 extend: 'pdf',
                 title: '',
                 exportOptions: {
-                    columns: [0]
+                    columns: [1,2,3,4]
                 }
             }],
             lengthMenu: [
@@ -830,7 +830,6 @@ aria-hidden="true">
             ],
             processing: true,
             serverSide: true,
-            responsive: true,
             order: [[ 4, 'asc' ], [3, 'asc']],
             ajax: "{{ route('siswa.index') }}",
             columns: [

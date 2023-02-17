@@ -17,7 +17,7 @@ class ProfilController extends Controller
             $nilai = [
                 'nis' => '',
                 'nisn' => '',
-                'nama' => 'Admin',
+                'nama' => User::where('id', 'admin')->first()->name,
                 'kelas' => '',
                 'agama' => '',
                 'pkn' => '',
@@ -68,6 +68,33 @@ class ProfilController extends Controller
             'riwayat' => $riwayat,
             'status' => $status
         ]);
+    }
+
+    public function identitas(Request $request) {
+        $admin = User::where('id', 'admin')->first();
+        $update = [
+            'name' => $request->nama
+        ];
+        if($request->file('logo') != null) {
+            $file = $request->file('logo');
+            if ($file->getSize() > 5000000) {
+                return back()->with('gagal', 'Ukuran maksimal foto adalah 5MB.');
+            }
+            if ($file->getMimeType() != 'image/jpeg' and $file->getMimeType() != 'image/png') {
+                return back()->with('gagal', 'Format file yang di perbolehkan adalah png, jpg, atau jpeg.');
+            }
+            if ($admin['logo'] != 'logo-default.png') {
+                unlink(public_path("images/$admin->logo"));
+            }
+            $filename = 'logo.' . pathinfo($_FILES['logo']['name'], PATHINFO_EXTENSION);
+            $file->move(public_path('images'), $filename);
+            $update = [
+                'name' => $request->nama,
+                'logo' => $filename
+            ];
+        }
+        User::where('id', 'admin')->update($update);
+        return back()->with('sukses', 'Data berhasil diperbarui.');
     }
 
     public function change_pass(Request $request)

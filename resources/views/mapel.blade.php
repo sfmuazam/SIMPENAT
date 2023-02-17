@@ -116,32 +116,35 @@
         .appendTo('#table1 thead');
     // table serverside
     var table = $('#table1').DataTable({
-            dom: 'lBfrtip',
+            dom: 'Bfrtip',
             orderCellsTop: true,
             buttons: [{
                 extend: 'csv',
                 title: '',
                 exportOptions: {
-                    columns: [0]
+                    columns: [1]
                 }
             },
             {
                 extend: 'excel',
                 title: '',
                 exportOptions: {
-                    columns: [0]
+                    columns: [1]
                 }
             },
             {
                 extend: 'pdf',
                 title: '',
                 exportOptions: {
-                    columns: [0]
+                    columns: [1]
                 }
             }],
+            lengthMenu: [
+                [-1],
+                ["All"]
+            ],
             processing: true,
             serverSide: true,
-            responsive: true,
             order: [[ 1, 'asc' ]],
             ajax: "{{ route('mapel.index') }}",
             columns: [
@@ -271,7 +274,7 @@
 
             Swal.fire({
                 title: 'Yakin untuk menghapus?',
-                text: "Menghapus data kelas juga akan menghapus data siswa di dalamnya! Data yang sudah dihapus tidak dapat dipulihkan, lanjutkan?",
+                text: "Data yang sudah dihapus tidak dapat dipulihkan, lanjutkan?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',

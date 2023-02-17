@@ -242,6 +242,15 @@
                                 <hr>
                                 <div class="row mt-2">
                                     <div class="col-5">
+                                        <h6 class="mb-0">Identitas Sekolah</h6>
+                                    </div>
+                                    <div class="col-7">
+                                        <a style="cursor: pointer" onMouseOver="this.style.color='#ffff'" class="bg-primary badge" data-bs-toggle="modal" data-bs-target="#modal-sekolah">Ubah</a>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row mt-2">
+                                    <div class="col-5">
                                         <h6 class="mb-0">Status Seleksi</h6>
                                     </div>
                                     <div class="col-7">
@@ -270,7 +279,7 @@
                                 <hr>
                                 <div class="text-center mt-4">
                                     <a class="btn-success btn open {{ ($status == 'Aktif') ? 'd-none' : '' }}">Buka Seleksi</a>
-                                    <a class="btn-danger btn close {{ ($status == 'Tidak Aktif') ? 'd-none' : '' }}">Tutup Seleksi</a>
+                                    <a class="btn-danger btn tutup {{ ($status == 'Tidak Aktif') ? 'd-none' : '' }}">Tutup Seleksi</a>
                                 </div>
                             </div>
                         </div>
@@ -279,6 +288,65 @@
             </div>
         </div>
     </section>
+</div>
+
+{{-- Modal Identitas Sekolah --}}
+<div class="modal fade" id="modal-sekolah" tabindex="-1" role="dialog" aria-labelledby="sekolahTitle"
+aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+  <div class="modal-content">
+    <div class="modal-header bg-primary p-4">
+      <h5 class="modal-title white" id="tambahDataTitle">Ubah Identitas Sekolah
+      </h5>
+      <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+        <i data-feather="x"></i>
+      </button>
+    </div>
+    <form autocomplete="off" class="form mb-0" enctype="multipart/form-data" method="POST" action="{{ route('profil.identitas') }}">
+      @csrf
+      <div class="modal-body py-0">
+        <section id="multiple-column-form">
+          <div class="row match-height">
+            <div class="col-12">
+              <div class="card mb-0">
+                <div class="card-content">
+                  <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                              <label for="nis" class="form-label">Nama Sekolah</label>
+                              <input value="{{ $nilai['nama'] }}" type="text" id="nama" class="form-control" name="nama"
+                                placeholder="Masukkan Nama Sekolah ...." required>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                              <label for="nis" class="form-label">Logo Sekolah</label>
+                              <input type="file" id="logo" class="form-control" name="logo">
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="modal-footer">
+        <button type="reset" class="btn btn-light-secondary">
+          <i class="bx bx-x d-block d-sm-none"></i>
+          <span class="d-none d-sm-block">Reset</span>
+        </button>
+
+        <button type="submit" class="btn btn-primary ml-1">
+          <i class="bx bx-check d-block d-sm-none"></i>
+          <span class="d-none d-sm-block">Simpan</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
 </div>
 
 {{-- Modal Kata Sandi --}}
@@ -441,7 +509,7 @@ aria-hidden="true">
     });
 
     // initialize btn close
-    $('body').on('click', '.close', function () {
+    $('body').on('click', '.tutup', function () {
         Swal.fire({
             title: 'Tutup Seleksi',
             text: "Status seleksi saat ini terbuka, apakah anda ingin menutupnya?",

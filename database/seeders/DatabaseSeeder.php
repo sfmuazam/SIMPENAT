@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Mapel;
 use App\Models\Kelas;
 use App\Models\User;
+use App\Models\Riwayat;
 
 class DatabaseSeeder extends Seeder
 {
@@ -24,11 +25,13 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
+
         User::create([
-            'name' => 'Admin',
+            'name' => 'SMA Negeri 2 Kota Tegal',
             'id' => 'admin',
             'password' => bcrypt('admin'),
             'cover' => 'default.jpg',
+            'logo' => 'logo-default.png',
             'status' => 'Aktif'
         ]);
 

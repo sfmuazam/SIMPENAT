@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('password');
             $table->string('cover')->nullable();
+            $table->string('logo')->nullable();
             $table->string('status')->nullable();
             $table->rememberToken();
             $table->timestamps();

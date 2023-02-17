@@ -21,7 +21,7 @@ class SiswaController extends Controller
 
             return DataTables::of($kelas)
                 ->addColumn('checkbox', function ($data) {
-                    return '<input type="checkbox" class="sub_chk" data-id="' . $data->id . '">';
+                    return '<input type="checkbox" class="sub_chk" data-id="' . $data->nis . '">';
                 })->addColumn('aksi', function ($data) {
                     $button = '<div data-toggle="tooltip" data-id="' . $data->id . '" data-original-title="Nilai" class="btn btn-sm btn-icon btn-info btn-circle mr-2 nilai"><i style="color:white;" class="bi bi-grid"></i></div>';
                     $button .= ' <div data-toggle="tooltip" data-id="' . $data->id . '" data-original-title="Edit" class="btn btn-sm btn-icon btn-success btn-circle mr-2 edit editKelas"><i class="bi bi-pencil-square"></i></div>';
@@ -197,15 +197,17 @@ class SiswaController extends Controller
 
         User::destroy($nis);
         Siswa::find($id)->delete();
+        Riwayat::where('nis',$nis)->delete();
 
         return response()->json(['success' => 'Data Berhasil Dihapus']);
     }
 
     public function deleteAll(Request $request)
     {
-        $niss = $request->niss;
-        User::whereIn('id', explode(",", $niss))->delete();
-        Siswa::whereIn('nis', explode(",", $niss))->delete();
+        $nis = $request->ids;
+        User::whereIn('id', explode(",", $nis))->delete();
+        Siswa::whereIn('nis', explode(",", $nis))->delete();
+        Riwayat::whereIn('nis', explode(",", $nis))->delete();
         return response()->json(['success' => "Products Deleted successfully."]);
     }
 }

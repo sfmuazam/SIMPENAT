@@ -39,6 +39,7 @@
                                             class="bi bi-x-lg"></i></div>
                                 </th>
                                 @endif
+                                <th>No</th>
                                 <th>NIS</th>
                                 <th>Nama</th>
                                 <th>Asal Kelas</th>
@@ -62,7 +63,7 @@
                                             <i data-feather="x"></i>
                                         </button>
                                     </div>
-                                    <form class="form mb-0" id="formsiswa" name="formsiswa">
+                                    <form class="form mb-0" id="s" name="s">
                                         <div class="modal-body py-0">
                                             <section id="multiple-column-form">
                                                 <div class="row match-height">
@@ -79,7 +80,7 @@
                                                                                     class="form-label">Nama
                                                                                     Lengkap</label>
                                                                                 <select class="form-select nama"
-                                                                                    id="id_siswa" name="id_siswa"
+                                                                                    id="nis" name="nis"
                                                                                     data-placeholder="Pilih Nama Siswa"
                                                                                     required>
                                                                                     <option></option>
@@ -146,25 +147,32 @@
     var table = $('#table1').DataTable({
             dom: 'lBfrtip',
             orderCellsTop: true,
+
             buttons: [{
                 extend: 'csv',
                 title: '',
                 exportOptions: {
-                    columns: [0]
+                    @if(auth()->user()->id == '0')
+                    columns: [1,2,3,4,5]
+                    @endif
                 }
             },
             {
                 extend: 'excel',
                 title: '',
                 exportOptions: {
-                    columns: [0]
+                    @if(auth()->user()->id == '0')
+                    columns: [1,2,3,4,5]
+                    @endif
                 }
             },
             {
                 extend: 'pdf',
                 title: '',
                 exportOptions: {
-                    columns: [0]
+                    @if(auth()->user()->id == '0')
+                    columns: [1,2,3,4,5]
+                    @endif
                 }
             }],
             lengthMenu: [
@@ -173,19 +181,19 @@
             ],
             processing: true,
             serverSide: true,
-            responsive: true,
             @if(auth()->user()->id == '0')
-            order: [[4, 'desc']],
+            order: [[5, 'desc']],
             @endif
             @if(auth()->user()->id > '0')
-            order: [[ 3, 'desc' ]],
+            order: [[ 4, 'desc' ]],
             @endif
             ajax: "{{ url('/seleksi') }}"+ '/' + $('#nama_kelas').val(),
             columns: [
                 @if(auth()->user()->id == '0')
                 {data: 'checkbox', name: 'checkbox', searchable: false, orderable: false, className: 'dt-center'},
                 @endif
-                {data: 'nis', name: 'nis'},
+                {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false, width: "5%"},
+                {data: 'nis', name: 'nis', width: "7%"},
                 {data: 'nama', name: 'nama'},
                 {data: 'kelas', name: 'kelas', width: "15%"},
                 {data: 'nilai_akhir', name: 'nilai_akhir', width: "15%"},
@@ -197,7 +205,6 @@
             @if(auth()->user()->id == '0')
             initComplete: function () {
             var api = this.api();
-
 
             // For each column
             api
@@ -245,6 +252,17 @@
                         });
                 });
                 api
+                .columns(1)
+                .eq(0)
+                .each(function (colIdx) {
+                    // Set the header cell to contain the input element
+                    var cell = $('.filters th').eq(
+                        $(api.column(colIdx).header()).index()
+                    );
+                    var title = $(cell).text();
+                    $(cell).html('');
+                });
+                api
                 .columns(-1)
                 .eq(0)
                 .each(function (colIdx) {
@@ -280,12 +298,15 @@
             $.ajax({
                 data: {
                     nis: nis,
+                    kelas_tujuan: $('#nama_kelas').val()
                 },
                 url: "{{ route('seleksi.store') }}"+ '/' + nis,
                 type: "POST",
                 dataType: 'json',
                 success: function (data) {
                     console.log(data);
+                    $('#formsiswa').trigger("reset");
+                    $('#modal-siswa').modal('hide');
                     swal_success();
                     table.draw();
                 },
@@ -301,7 +322,8 @@
 
             $.ajax({
                 data: {
-                    nis: $('#id_siswa').val(),
+                    nis: $('#nis').val(),
+                    kelas_tujuan: $('#nama_kelas').val()
                 },
                 url: "{{ route('seleksi.tambah') }}",
                 type: "POST",
@@ -309,7 +331,7 @@
                 success: function (data) {
                     console.log(data);
                     $('#formKelas').trigger("reset");
-                    $('#modal-kelas').modal('hide');
+                    $('#modal-siswa').modal('hide');
                     swal_success();
                     table.draw();
                 },
@@ -372,7 +394,7 @@
             if (result.isConfirmed) {
                 var join_selected_values = allVals.join(",");
                 $.ajax({
-                    url: "{{ route('siswa.deleteAll') }}",
+                    url: "{{ route('seleksi.deleteAll') }}",
                     type: 'DELETE',
                     data: 'ids='+join_selected_values,
                     success: function (data) {
