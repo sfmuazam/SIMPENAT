@@ -150,7 +150,7 @@
 
             buttons: [{
                 extend: 'csv',
-                title: '',
+                title: '{{ $namakelas }}',
                 exportOptions: {
                     @if(auth()->user()->id == '0')
                     columns: [1,2,3,4,5]
@@ -159,7 +159,7 @@
             },
             {
                 extend: 'excel',
-                title: '',
+                title: '{{ $namakelas }}',
                 exportOptions: {
                     @if(auth()->user()->id == '0')
                     columns: [1,2,3,4,5]
@@ -168,7 +168,7 @@
             },
             {
                 extend: 'pdf',
-                title: '',
+                title: '{{ $namakelas }}',
                 exportOptions: {
                     @if(auth()->user()->id == '0')
                     columns: [1,2,3,4,5]

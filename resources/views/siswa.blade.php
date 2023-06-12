@@ -583,6 +583,22 @@ aria-hidden="true">
       <div class="card-header">
         <div class="justify-content-between d-flex">
           <div class="form-group">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Status Memilih </td>
+                        <td>:</td>
+                        <td>
+                            <select class="form-control" id="status_memilih" name="status_memilih"
+                            data-placeholder="Semua">
+                            <option value="semua">Tampilkan Semua</option>
+                            <option value="belum">Belum Memilih</option>
+                            <option value="sudah">Sudah Memilih</option>
+                          </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
           </div>
           <div class="tambah">
             <button type="button" id="importKelas" class="btn btn-primary block" data-bs-toggle="modal"
@@ -613,6 +629,7 @@ aria-hidden="true">
                 <th>NISN</th>
                 <th>Nama</th>
                 <th>Asal Kelas</th>
+                <th>Kelas Tujuan</th>
                 <th>Aksi</th>
               </tr>
             </thead>
@@ -799,6 +816,10 @@ aria-hidden="true">
         .clone(true)
         .addClass('filters')
         .appendTo('#table1 thead');
+
+        $('#status_memilih').change(function () {
+            table.draw();
+        });
     // table serverside
     var table = $('#table1').DataTable({
             dom: 'lBfrtip',
@@ -831,13 +852,19 @@ aria-hidden="true">
             processing: true,
             serverSide: true,
             order: [[ 4, 'asc' ], [3, 'asc']],
-            ajax: "{{ route('siswa.index') }}",
+            ajax: {
+                url: "{{ route('siswa.index') }}",
+                data: function (d) {
+                    d.status_memilih = $('#status_memilih').val()
+                }
+            },
             columns: [
                 {data: 'checkbox', name: 'checkbox', searchable: false, orderable: false, className: 'dt-center'},
                 {data: 'nis', name: 'nis', width: "10%"},
                 {data: 'nisn', name: 'nisn', width: "15%"},
                 {data: 'nama', name: 'nama'},
                 {data: 'kelas', name: 'kelas', width: "15%"},
+                {data: 'isJoin', name: 'isJoin', className: 'dt-center', searchable: true, orderable: true},
                 {data: 'aksi', name: 'aksi', searchable: false,},
             ],
             initComplete: function () {

@@ -17,18 +17,30 @@ class SiswaController extends Controller
     public function index(Request $request)
     {
         if (request()->ajax()) {
-            $kelas = Siswa::select(['*']);
+            if ($request->status_memilih == 'sudah')
+                $kelas = Siswa::select(['*'])->where('kelas_tujuan', '!=', NULL)->orWhere('kelas_tujuan', '!=', '');
+            else if ($request->status_memilih == 'belum')
+                $kelas = Siswa::select(['*'])->where('kelas_tujuan', NULL)->orWhere('kelas_tujuan', '');
+            else
+                $kelas = Siswa::select(['*']);
+
+
 
             return DataTables::of($kelas)
                 ->addColumn('checkbox', function ($data) {
                     return '<input type="checkbox" class="sub_chk" data-id="' . $data->nis . '">';
+                })->addColumn('isJoin', function ($data) {
+                    if ($data->kelas_tujuan == NULL  || $data->kelas_tujuan == "")
+                        return '<span class="badge bg-danger">Belum<br>Memilih!</span>';
+                    else
+                        return '<span class="badge bg-success">Sudah<br>Memilih ' . $data->kelas_tujuan . '</span>';
                 })->addColumn('aksi', function ($data) {
                     $button = '<div data-toggle="tooltip" data-id="' . $data->id . '" data-original-title="Nilai" class="btn btn-sm btn-icon btn-info btn-circle mr-2 nilai"><i style="color:white;" class="bi bi-grid"></i></div>';
                     $button .= ' <div data-toggle="tooltip" data-id="' . $data->id . '" data-original-title="Edit" class="btn btn-sm btn-icon btn-success btn-circle mr-2 edit editKelas"><i class="bi bi-pencil-square"></i></div>';
                     $button .= ' <div data-toggle="tooltip" data-id="' . $data->id . '" data-original-title="Delete" class="btn btn-sm btn-icon btn-danger btn-circle mr-2 deleteKelas"><i
               class="bi bi-trash-fill"></i></div>';
                     return $button;
-                })->rawColumns(['checkbox', 'aksi'])->make(true);
+                })->rawColumns(['checkbox', 'isJoin', 'aksi'])->make(true);
         }
         return view('siswa', [
             'title' => 'Siswa',
@@ -197,7 +209,7 @@ class SiswaController extends Controller
 
         User::destroy($nis);
         Siswa::find($id)->delete();
-        Riwayat::where('nis',$nis)->delete();
+        Riwayat::where('nis', $nis)->delete();
 
         return response()->json(['success' => 'Data Berhasil Dihapus']);
     }
