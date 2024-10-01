@@ -1,67 +1,77 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Subject Specialization Selection System (SIMPENAT)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+[Demo](https://simpenat.sfmuazam.xyz)
 
-## About Laravel
+A web-based application using Laravel to facilitate subject specialization selection for 10th-grade students. The system allows students to choose classes based on their desired subject specializations and academic performance, while administrators can manage students, classes, and subject preferences. The system functions like a school admission process where students with higher grades have priority.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Tech Stack
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+![Laravel](https://img.shields.io/badge/laravel-%23FF2D20.svg?style=for-the-badge&logo=laravel&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
+![MySQL](https://img.shields.io/badge/mysql-%2300000f.svg?style=for-the-badge&logo=mysql&logoColor=white)
+![jQuery](https://img.shields.io/badge/jquery-%230769AD.svg?style=for-the-badge&logo=jquery&logoColor=white)
+![AJAX](https://img.shields.io/badge/ajax-00BFFF?style=for-the-badge)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## System Overview
 
-## Learning Laravel
+### Key Features
+- **Student Class Selection**: Students can choose classes based on their desired subject specialization and academic grades.
+- **View Class Details**: Students can view the list of names and grades of other students already assigned to each class.
+- **Admin Management**: Admins can manage students, classes, and subject specializations.
+- **Class Prioritization**: Students with higher academic grades have priority for admission into classes, pushing others with lower grades to alternate options.
+- **Selection History**: Admins can track the history of class selections made by students.
+- **Real-time Updates**: AJAX is used to update the selection process without page reloads.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Images
+![SIMPENAT System Overview](https://example.com/simpenat-overview.png) 
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Installation
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Prerequisites
+Ensure you have the following installed on your machine:
+- PHP 8.2
+- Composer
+- MySQL 5.x
 
-## Laravel Sponsors
+### Steps
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+1. **Clone the Repository**
+    ```bash
+    git clone https://github.com/yourusername/simpenat.git
+    cd simpenat
+    ```
 
-### Premium Partners
+2. **Install Dependencies**
+    ```bash
+    composer install
+    ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+3. **Environment Setup**
+    Create a `.env` file by copying `.env.example`:
+    ```bash
+    cp .env.example .env
+    ```
+    Update your database credentials and other configurations in `.env`:
+    ```bash
+    DB_DATABASE=your_database
+    DB_USERNAME=your_username
+    DB_PASSWORD=your_password
+    ```
 
-## Contributing
+4. **Generate Application Key**
+    ```bash
+    php artisan key:generate
+    ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+5. **Run Migrations**
+    Create the necessary database tables by running migrations:
+    ```bash
+    php artisan migrate --seed
+    ```
 
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# sebarminat
+6. **Serve the Application**
+    Start the Laravel development server:
+    ```bash
+    php artisan serve
+    ```
+    The application will be accessible at `http://localhost:8000`.
